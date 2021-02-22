@@ -52,6 +52,14 @@ class Menu
     {
         wp_enqueue_style('cfc_style');
         wp_enqueue_script('cfc_script');
+        wp_localize_script(
+            'cfc_script',
+            'cfc_helper_obj',
+            array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('cfc_ajax_nonce')
+            )
+        );
     }
 
     /**

@@ -39,7 +39,7 @@ Domain Path: /languages
  */
 
 // don't call the file directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
@@ -50,7 +50,8 @@ require_once __DIR__ . '/vendor/autoload.php';
  *
  * @class Sdevs_cfc The class that holds the entire Sdevs_cfc plugin
  */
-final class Sdevs_cfc {
+final class Sdevs_cfc
+{
     /**
      * Plugin version
      *
@@ -71,13 +72,14 @@ final class Sdevs_cfc {
      * Sets up all the appropriate hooks and actions
      * within our plugin.
      */
-    private function __construct() {
+    private function __construct()
+    {
         $this->define_constants();
 
-        register_activation_hook( __FILE__, [ $this, 'activate' ] );
-        register_deactivation_hook( __FILE__, [ $this, 'deactivate' ] );
+        register_activation_hook(__FILE__, [$this, 'activate']);
+        register_deactivation_hook(__FILE__, [$this, 'deactivate']);
 
-        add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
+        add_action('plugins_loaded', [$this, 'init_plugin']);
     }
 
     /**
@@ -88,10 +90,11 @@ final class Sdevs_cfc {
      *
      * @return Sdevs_cfc|bool
      */
-    public static function init() {
+    public static function init()
+    {
         static $instance = false;
 
-        if ( ! $instance ) {
+        if (!$instance) {
             $instance = new Sdevs_cfc();
         }
 
@@ -105,9 +108,10 @@ final class Sdevs_cfc {
      *
      * @return mixed
      */
-    public function __get( $prop ) {
-        if ( array_key_exists( $prop, $this->container ) ) {
-            return $this->container[ $prop ];
+    public function __get($prop)
+    {
+        if (array_key_exists($prop, $this->container)) {
+            return $this->container[$prop];
         }
 
         return $this->{$prop};
@@ -120,8 +124,9 @@ final class Sdevs_cfc {
      *
      * @return mixed
      */
-    public function __isset( $prop ) {
-        return isset( $this->{$prop} ) || isset( $this->container[ $prop ] );
+    public function __isset($prop)
+    {
+        return isset($this->{$prop}) || isset($this->container[$prop]);
     }
 
     /**
@@ -129,13 +134,14 @@ final class Sdevs_cfc {
      *
      * @return void
      */
-    public function define_constants() {
-        define( 'CFC_ASSETS_VERSION', self::version );
-        define( 'CFC_ASSETS_FILE', __FILE__ );
-        define( 'CFC_ASSETS_PATH', dirname( CFC_ASSETS_FILE ) );
-        define( 'CFC_ASSETS_INCLUDES', CFC_ASSETS_PATH . '/includes' );
-        define( 'CFC_ASSETS_URL', plugins_url( '', CFC_ASSETS_FILE ) );
-        define( 'CFC_ASSETS_ASSETS', CFC_ASSETS_URL . '/assets' );
+    public function define_constants()
+    {
+        define('CFC_ASSETS_VERSION', self::version);
+        define('CFC_ASSETS_FILE', __FILE__);
+        define('CFC_ASSETS_PATH', dirname(CFC_ASSETS_FILE));
+        define('CFC_ASSETS_INCLUDES', CFC_ASSETS_PATH . '/includes');
+        define('CFC_ASSETS_URL', plugins_url('', CFC_ASSETS_FILE));
+        define('CFC_ASSETS_ASSETS', CFC_ASSETS_URL . '/assets');
     }
 
     /**
@@ -143,7 +149,8 @@ final class Sdevs_cfc {
      *
      * @return void
      */
-    public function init_plugin() {
+    public function init_plugin()
+    {
         $this->includes();
         $this->init_hooks();
     }
@@ -153,7 +160,8 @@ final class Sdevs_cfc {
      *
      * Nothing being called here yet.
      */
-    public function activate() {
+    public function activate()
+    {
         $installer = new SpringDevs\Cfc\Installer();
         $installer->run();
     }
@@ -163,8 +171,8 @@ final class Sdevs_cfc {
      *
      * Nothing being called here yet.
      */
-    public function deactivate() {
-
+    public function deactivate()
+    {
     }
 
     /**
@@ -172,16 +180,17 @@ final class Sdevs_cfc {
      *
      * @return void
      */
-    public function includes() {
-        if ( $this->is_request( 'admin' ) ) {
+    public function includes()
+    {
+        if ($this->is_request('admin')) {
             $this->container['admin'] = new SpringDevs\Cfc\Admin();
         }
 
-        if ( $this->is_request( 'frontend' ) ) {
+        if ($this->is_request('frontend')) {
             $this->container['frontend'] = new SpringDevs\Cfc\Frontend();
         }
 
-        if ( $this->is_request( 'ajax' ) ) {
+        if ($this->is_request('ajax')) {
             // require_once CFC_ASSETS_INCLUDES . '/class-ajax.php';
         }
     }
@@ -191,11 +200,12 @@ final class Sdevs_cfc {
      *
      * @return void
      */
-    public function init_hooks() {
-        add_action( 'init', [ $this, 'init_classes' ] );
+    public function init_hooks()
+    {
+        add_action('init', [$this, 'init_classes']);
 
         // Localize our plugin
-        add_action( 'init', [ $this, 'localization_setup' ] );
+        add_action('init', [$this, 'localization_setup']);
     }
 
     /**
@@ -203,9 +213,10 @@ final class Sdevs_cfc {
      *
      * @return void
      */
-    public function init_classes() {
-        if ( $this->is_request( 'ajax' ) ) {
-            // $this->container['ajax'] =  new SpringDevs\Cfc\Ajax();
+    public function init_classes()
+    {
+        if ($this->is_request('ajax')) {
+            $this->container['ajax'] =  new SpringDevs\Cfc\Ajax();
         }
 
         $this->container['api']    = new SpringDevs\Cfc\Api();
@@ -217,8 +228,9 @@ final class Sdevs_cfc {
      *
      * @uses load_plugin_textdomain()
      */
-    public function localization_setup() {
-        load_plugin_textdomain( 'sdevs_wea', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    public function localization_setup()
+    {
+        load_plugin_textdomain('sdevs_wea', false, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
 
     /**
@@ -228,25 +240,25 @@ final class Sdevs_cfc {
      *
      * @return bool
      */
-    private function is_request( $type ) {
-        switch ( $type ) {
-            case 'admin' :
+    private function is_request($type)
+    {
+        switch ($type) {
+            case 'admin':
                 return is_admin();
 
-            case 'ajax' :
-                return defined( 'DOING_AJAX' );
+            case 'ajax':
+                return defined('DOING_AJAX');
 
-            case 'rest' :
-                return defined( 'REST_REQUEST' );
+            case 'rest':
+                return defined('REST_REQUEST');
 
-            case 'cron' :
-                return defined( 'DOING_CRON' );
+            case 'cron':
+                return defined('DOING_CRON');
 
-            case 'frontend' :
-                return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
+            case 'frontend':
+                return (!is_admin() || defined('DOING_AJAX')) && !defined('DOING_CRON');
         }
     }
-
 } // Sdevs_cfc
 
 /**
@@ -254,7 +266,8 @@ final class Sdevs_cfc {
  *
  * @return \Sdevs_cfc|bool
  */
-function sdevs_cfc() {
+function sdevs_cfc()
+{
     return Sdevs_cfc::init();
 }
 

@@ -1,16 +1,29 @@
 <template>
   <div>
-    <Head />
+    <Head :fields="fields" />
     <Section />
     <button
-      @click="$modal.show('my-first-modal')"
+      @click="$modal.show('form')"
       style="margin-bottom: 15px"
       class="sdevs-button cfc-primary-button"
     >
       ADD NEW
     </button>
-    <Card />
+    <!-- <div class="cfc-card-row">
+      <div class="col"><Card /></div>
+      <div class="col"><Card /></div>
+    </div> -->
+    <draggable v-model="fields">
+      <transition-group>
+        <Card
+          v-for="(field, index) in fields"
+          :key="'card-' + index"
+          :field="field"
+        />
+      </transition-group>
+    </draggable>
     <Form :tabs="tabs" />
+    <Column :fields="fields" />
   </div>
 </template>
 
@@ -19,10 +32,13 @@ import Head from "./Head";
 import Section from "./Section";
 import Card from "./Card";
 import Form from "./Form";
+import Column from "./Column";
+import draggable from "vuedraggable";
 export default {
   name: "App",
   data() {
     return {
+      fields: [],
       tabs: [
         {
           label: "Labels",
@@ -154,14 +170,32 @@ export default {
       ],
     };
   },
+  methods: {
+    getData() {
+      let formData = {
+        action: "cfc_get_fields",
+      };
+      let root = this;
+      axios
+        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .then((response) => {
+          root.fields = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  mounted() {
+    this.getData();
+  },
   components: {
     Head,
     Section,
     Card,
     Form,
+    draggable,
+    Column,
   },
 };
 </script>
-
-<style>
-</style>

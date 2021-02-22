@@ -1,8 +1,11 @@
 <template>
   <div class="cfc-card">
-    <strong>First Name</strong>
+    <strong>{{ field.label }}</strong>
     <div class="cfc-card-icons">
-      <button class="sdevs-button cfc-secondary-button">
+      <button
+        class="sdevs-button cfc-secondary-button"
+        @click="$modal.show('column_selection', field.key)"
+      >
         <svg
           style="position: relative; top: 4px"
           width="16"
@@ -56,12 +59,13 @@
 <script>
 export default {
   name: "Card",
+  props: ["field"],
   data() {
     return {};
   },
   methods: {
     openSetting() {
-      this.$modal.show("my-first-modal");
+      this.$modal.show("form");
     },
   },
 };

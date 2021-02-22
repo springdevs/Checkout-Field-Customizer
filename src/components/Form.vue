@@ -1,5 +1,5 @@
 <template>
-  <modal name="my-first-modal" height="500" :draggable="true">
+  <modal name="form" height="500" :draggable="true">
     <div class="cfc-admin-form sdevs-form">
       <div class="cfc-modal-titlebar">
         <strong>Checkout forums</strong>
@@ -36,7 +36,11 @@
                 <Input v-model="Afields[rowfield.name]" :field="rowfield" />
               </div>
               <div v-else-if="rowfield.type === 'select'">
-                <Select v-model="Afields[rowfield.name]" :field="rowfield" />
+                <Select
+                  v-on:selectInputData="changeVisible"
+                  v-model="Afields[rowfield.name]"
+                  :field="rowfield"
+                />
               </div>
             </div>
           </div>
@@ -45,7 +49,11 @@
               <Input v-model="Afields[field.name]" :field="field" />
             </div>
             <div v-else-if="field.type === 'select'">
-              <Select v-model="Afields[field.name]" :field="field" />
+              <Select
+                v-on:selectInputData="changeVisible"
+                v-model="Afields[field.name]"
+                :field="field"
+              />
             </div>
             <div v-else-if="field.type === 'multi'">
               <div class="cfc-admin-form-col" v-if="visible">
@@ -104,6 +112,7 @@
                     </button>
                     <button
                       @click="removeField(mindex)"
+                      v-if="option_fields.length > 1"
                       class="sdevs-button cfc-danger-button"
                     >
                       <svg
@@ -139,7 +148,9 @@
           </div>
         </div>
         <div class="cfc-admin-form-buttons">
-          <button class="sdevs-button cfc-primary-button">Save Changes</button>
+          <button @click="submitForm" class="sdevs-button cfc-primary-button">
+            Save Changes
+          </button>
           <button class="sdevs-button cfc-danger-button">Reset</button>
         </div>
       </div>
@@ -168,15 +179,14 @@ export default {
     };
   },
   methods: {
-    changeVisible(event) {
-      console.log("Hello world");
-      // if (data === "select" || data === "radio") this.visible = true;
+    changeVisible(data) {
+      if (data === "select" || data === "radio") this.visible = true;
     },
     emmitData() {
       this.Afields.options = this.option_fields;
     },
     closeSetting() {
-      this.$modal.hide("my-first-modal");
+      this.$modal.hide("form");
     },
     getFields(fields) {
       if (typeof fields === "object") this.fields = fields;
@@ -209,6 +219,29 @@ export default {
     },
     removeField(index) {
       this.option_fields.splice(index, 1);
+    },
+    submitForm() {
+      let formData = {
+        action: "cfc_create_field",
+        data: this.Afields,
+        nonce: cfc_helper_obj.nonce,
+      };
+      axios
+        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .then((response) => {
+          if (response.data.type === "error") {
+            this.$swal.fire({
+              icon: "error",
+              title: "ERROR !!",
+              text: response.data.msg,
+            });
+          } else {
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   mounted() {

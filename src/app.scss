@@ -35,7 +35,7 @@ a.cfc-sec-active {
     border-radius: 4px;
     background-color: #fff;
     box-shadow: 0px 1px 0 0 #e6e6e6;
-    cursor: pointer;
+    cursor: all-scroll;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -177,4 +177,29 @@ button.sdevs-button.cfc-secondary-button {
 
 .cfc-multi-buttons > button {
     margin-right: 5px;
+}
+
+.cfc-card-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .col {
+        width: 50%;
+        margin: 0px 5px;
+    }
+}
+
+ul.cfc-column-lists {
+    overflow: auto;
+    height: 450px;
+    margin: 20px;
+    li {
+        border: 1px solid #e6e6e6;
+        padding: 10px;
+        font-weight: 600;
+        box-shadow: 1px 1px 3px 0px #6b66660f;
+        border-radius: 3px;
+        cursor: pointer;
+    }
 }

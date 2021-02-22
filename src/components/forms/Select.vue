@@ -3,6 +3,7 @@
     <label :for="field.name">{{ field.label }}</label>
     <select
       :id="field.name"
+      @change="$emit('selectInputData', $event.target.value)"
       @input="$emit('input', $event.target.value)"
       v-model="selected"
     >
