@@ -34,7 +34,27 @@ class Ajax
                     "msg" => __("Name field is required !!", "sdevs_wea")
                 ]);
             }
-            wp_send_json($fields);
+            $all_fields = get_option("cfc_billing_fields", []);
+            array_push($all_fields, [
+                "key" => sanitize_text_field($fields['cfc-admin-name']),
+                "type" => sanitize_text_field($fields['cfc-admin-type']),
+                "label" => sanitize_text_field($fields['cfc-admin-label']),
+                "required" => sanitize_text_field($fields['cfc-admin-required']),
+                "class" => sanitize_text_field($fields['cfc-admin-class']),
+                "desc" => sanitize_text_field($fields['cfc-admin-desc']),
+                "placeholder" => sanitize_text_field($fields['cfc-admin-placeholder']),
+                "value" => sanitize_text_field($fields['cfc-admin-value']),
+                "display_in_email" => sanitize_text_field($fields['cfc-admin-display-email']),
+                "display_in_order" => sanitize_text_field($fields['cfc-admin-display-order']),
+                "status" => sanitize_text_field($fields['cfc-admin-status']),
+                "priority" => 0,
+                "from" => "custom"
+            ]);
+            update_option("cfc_billing_fields", $all_fields);
+            wp_send_json([
+                "type" => "success",
+                "msg" => "Created successfully !!"
+            ]);
         }
     }
 

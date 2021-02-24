@@ -148,10 +148,10 @@
           </div>
         </div>
         <div class="cfc-admin-form-buttons">
-          <button @click="submitForm" class="sdevs-button cfc-primary-button">
-            Save Changes
+          <button @click="createForm" class="sdevs-button cfc-primary-button">
+            Create
           </button>
-          <button class="sdevs-button cfc-danger-button">Reset</button>
+          <!-- <button class="sdevs-button cfc-danger-button">Delete</button> -->
         </div>
       </div>
     </div>
@@ -220,12 +220,13 @@ export default {
     removeField(index) {
       this.option_fields.splice(index, 1);
     },
-    submitForm() {
+    createForm() {
       let formData = {
         action: "cfc_create_field",
         data: this.Afields,
         nonce: cfc_helper_obj.nonce,
       };
+      let root = this;
       axios
         .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
         .then((response) => {
@@ -236,7 +237,22 @@ export default {
               text: response.data.msg,
             });
           } else {
-            console.log(response.data);
+            this.$swal.fire({
+              icon: "success",
+              title: "SUCCESS !!",
+              text: response.data.msg,
+            });
+            root.fields = [];
+            root.Afields = {};
+            root.option_fields = [
+              {
+                option_label: null,
+                option_value: null,
+              },
+            ];
+            root.visible = false;
+            this.$emit("updated", "created");
+            this.$modal.hide("form");
           }
         })
         .catch((error) => {

@@ -3,7 +3,7 @@
     <Head :fields="fields" />
     <Section />
     <button
-      @click="$modal.show('form')"
+      @click="$modal.show('form', 'create')"
       style="margin-bottom: 15px"
       class="sdevs-button cfc-primary-button"
     >
@@ -22,7 +22,7 @@
         />
       </transition-group>
     </draggable>
-    <Form :tabs="tabs" />
+    <Form v-on:updated="changeData" :tabs="tabs" />
     <Column :fields="fields" />
   </div>
 </template>
@@ -171,6 +171,9 @@ export default {
     };
   },
   methods: {
+    changeData() {
+      this.getData();
+    },
     getData() {
       let formData = {
         action: "cfc_get_fields",
