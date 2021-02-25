@@ -1,5 +1,5 @@
 <template>
-  <modal name="form" height="500" :draggable="true">
+  <modal name="form" height="500" :draggable="true" @before-open="setData">
     <div class="cfc-admin-form sdevs-form">
       <div class="cfc-modal-titlebar">
         <strong>Checkout forums</strong>
@@ -33,26 +33,36 @@
               <div
                 v-if="rowfield.type !== 'select' && rowfield.type !== 'multi'"
               >
-                <Input v-model="Afields[rowfield.name]" :field="rowfield" />
+                <Input
+                  v-model="Afields[rowfield.name]"
+                  :field="rowfield"
+                  :from="Afields.from"
+                />
               </div>
               <div v-else-if="rowfield.type === 'select'">
                 <Select
                   v-on:selectInputData="changeVisible"
                   v-model="Afields[rowfield.name]"
                   :field="rowfield"
+                  :from="Afields.from"
                 />
               </div>
             </div>
           </div>
           <div v-else>
             <div v-if="field.type !== 'select' && field.type !== 'multi'">
-              <Input v-model="Afields[field.name]" :field="field" />
+              <Input
+                v-model="Afields[field.name]"
+                :field="field"
+                :from="Afields.from"
+              />
             </div>
             <div v-else-if="field.type === 'select'">
               <Select
                 v-on:selectInputData="changeVisible"
                 v-model="Afields[field.name]"
                 :field="field"
+                :from="Afields.from"
               />
             </div>
             <div v-else-if="field.type === 'multi'">
@@ -147,11 +157,21 @@
             </div>
           </div>
         </div>
-        <div class="cfc-admin-form-buttons">
+        <div class="cfc-admin-form-buttons" v-if="action === 'create'">
           <button @click="createForm" class="sdevs-button cfc-primary-button">
             Create
           </button>
-          <!-- <button class="sdevs-button cfc-danger-button">Delete</button> -->
+        </div>
+        <div class="cfc-admin-form-buttons" v-if="action === 'edit'">
+          <button @click="updateForm" class="sdevs-button cfc-primary-button">
+            Update
+          </button>
+          <button
+            v-if="Afields.from === 'custom'"
+            class="sdevs-button cfc-danger-button"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
@@ -167,8 +187,11 @@ export default {
   props: ["tabs"],
   data() {
     return {
+      action: "create",
       fields: [],
-      Afields: {},
+      Afields: {
+        from: "custom",
+      },
       option_fields: [
         {
           option_label: null,
@@ -176,9 +199,16 @@ export default {
         },
       ],
       visible: false,
+      index: 0,
     };
   },
   methods: {
+    setData(data) {
+      const params = data.params;
+      this.action = params.type;
+      this.index = params.index;
+      this.getAllFields(params.field);
+    },
     changeVisible(data) {
       if (data === "select" || data === "radio") this.visible = true;
     },
@@ -191,7 +221,7 @@ export default {
     getFields(fields) {
       if (typeof fields === "object") this.fields = fields;
     },
-    getAllFields() {
+    getAllFields(field = false) {
       let tabs = this.tabs;
       for (let index = 0; index < tabs.length; index++) {
         const element = tabs[index];
@@ -202,6 +232,10 @@ export default {
             for (let rowindex = 0; rowindex < felement.row.length; rowindex++) {
               const rowelement = felement.row[rowindex];
               this.Afields[rowelement.name] = rowelement.value;
+              if (field) {
+                this.Afields[rowelement.name] = field[rowelement.name];
+                this.Afields.from = field.from;
+              }
             }
           } else {
             this.Afields[felement.name] = felement.value;
@@ -225,6 +259,46 @@ export default {
         action: "cfc_create_field",
         data: this.Afields,
         nonce: cfc_helper_obj.nonce,
+      };
+      let root = this;
+      axios
+        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .then((response) => {
+          if (response.data.type === "error") {
+            this.$swal.fire({
+              icon: "error",
+              title: "ERROR !!",
+              text: response.data.msg,
+            });
+          } else {
+            this.$swal.fire({
+              icon: "success",
+              title: "SUCCESS !!",
+              text: response.data.msg,
+            });
+            root.fields = [];
+            root.Afields = {};
+            root.option_fields = [
+              {
+                option_label: null,
+                option_value: null,
+              },
+            ];
+            root.visible = false;
+            this.$emit("updated", "created");
+            this.$modal.hide("form");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    updateForm() {
+      let formData = {
+        action: "cfc_update_field",
+        data: this.Afields,
+        nonce: cfc_helper_obj.nonce,
+        index: this.index,
       };
       let root = this;
       axios

@@ -7,6 +7,7 @@
       :placeholder="field.placeholder"
       :value="field.value"
       @input="$emit('input', $event.target.value)"
+      :readonly="from === 'default' && field.name === 'key'"
     />
   </div>
 </template>
@@ -14,6 +15,6 @@
 <script>
 export default {
   name: "Input",
-  props: ["field"]
+  props: ["field", "from"],
 };
 </script>

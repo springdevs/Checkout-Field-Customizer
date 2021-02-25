@@ -6,6 +6,12 @@
       @change="$emit('selectInputData', $event.target.value)"
       @input="$emit('input', $event.target.value)"
       v-model="selected"
+      :disabled="
+        from === 'default' &&
+        (field.name === 'type' ||
+          field.name === 'display_in_email' ||
+          field.name === 'display_in_order')
+      "
     >
       <option
         v-for="(option, index) in field.options"
@@ -21,7 +27,7 @@
 <script>
 export default {
   name: "Select",
-  props: ["field"],
+  props: ["field", "from"],
   data() {
     return {
       selected: null,

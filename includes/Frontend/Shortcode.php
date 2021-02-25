@@ -24,10 +24,11 @@ class Shortcode
             //                 "key" => $bkey,
             //                 "type" => isset($bfileds['type']) ? $bfileds['type'] : "text",
             //                 "label" => isset($bfileds['label']) ? $bfileds['label'] : null,
-            //                 "required" => $bfileds['required'],
+            //                 "required" => $bfileds['required'] ? "yes" : "no",
             //                 "class" => $bfileds['class'],
             //                 "priority" => $bfileds['priority'],
-            //                 "from" => "default"
+            //                 "from" => "default",
+            //                 "status" => "enable"
             //             ]);
             //         }
             //     }

@@ -14,6 +14,7 @@ class Ajax
     public function __construct()
     {
         add_action('wp_ajax_cfc_create_field', [$this, 'cfc_create_field']);
+        add_action('wp_ajax_cfc_update_field', [$this, 'cfc_update_field']);
         add_action('wp_ajax_cfc_get_fields', [$this, 'cfc_get_fields']);
         add_action('wp_ajax_cfc_update_fields', [$this, 'cfc_update_fields']);
     }
@@ -22,13 +23,13 @@ class Ajax
     {
         if (isset($_POST['action']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce') && isset($_POST['data'])) {
             $fields = $_POST['data'];
-            if (empty($fields['cfc-admin-label'])) {
+            if (empty($fields['label'])) {
                 return wp_send_json([
                     "type" => "error",
                     "msg" => __("Label field is required !!", "sdevs_wea")
                 ]);
             }
-            if (empty($fields['cfc-admin-name'])) {
+            if (empty($fields['key'])) {
                 return wp_send_json([
                     "type" => "error",
                     "msg" => __("Name field is required !!", "sdevs_wea")
@@ -36,20 +37,61 @@ class Ajax
             }
             $all_fields = get_option("cfc_billing_fields", []);
             array_push($all_fields, [
-                "key" => sanitize_text_field($fields['cfc-admin-name']),
-                "type" => sanitize_text_field($fields['cfc-admin-type']),
-                "label" => sanitize_text_field($fields['cfc-admin-label']),
-                "required" => sanitize_text_field($fields['cfc-admin-required']),
-                "class" => sanitize_text_field($fields['cfc-admin-class']),
-                "desc" => sanitize_text_field($fields['cfc-admin-desc']),
-                "placeholder" => sanitize_text_field($fields['cfc-admin-placeholder']),
-                "value" => sanitize_text_field($fields['cfc-admin-value']),
-                "display_in_email" => sanitize_text_field($fields['cfc-admin-display-email']),
-                "display_in_order" => sanitize_text_field($fields['cfc-admin-display-order']),
-                "status" => sanitize_text_field($fields['cfc-admin-status']),
+                "key" => sanitize_text_field($fields['key']),
+                "type" => sanitize_text_field($fields['type']),
+                "label" => sanitize_text_field($fields['label']),
+                "required" => sanitize_text_field($fields['required']),
+                "class" => sanitize_text_field($fields['class']),
+                "desc" => sanitize_text_field($fields['desc']),
+                "placeholder" => sanitize_text_field($fields['placeholder']),
+                "value" => sanitize_text_field($fields['value']),
+                "display_in_email" => sanitize_text_field($fields['display_in_email']),
+                "display_in_order" => sanitize_text_field($fields['display_in_order']),
+                "status" => sanitize_text_field($fields['status']),
                 "priority" => 0,
                 "from" => "custom"
             ]);
+            update_option("cfc_billing_fields", $all_fields);
+            wp_send_json([
+                "type" => "success",
+                "msg" => "Created successfully !!"
+            ]);
+        }
+    }
+
+    public function cfc_update_field()
+    {
+        if (isset($_POST['action']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce') && isset($_POST['data'])) {
+            $fields = $_POST['data'];
+            if (empty($fields['label'])) {
+                return wp_send_json([
+                    "type" => "error",
+                    "msg" => __("Label field is required !!", "sdevs_wea")
+                ]);
+            }
+            if (empty($fields['key'])) {
+                return wp_send_json([
+                    "type" => "error",
+                    "msg" => __("Name field is required !!", "sdevs_wea")
+                ]);
+            }
+            $all_fields = get_option('cfc_billing_fields', []);
+            $index = $_POST['index'];
+            foreach ($all_fields as $key => $all_field) {
+                if ($key == $index) {
+                    $all_fields[$key]["key"] = sanitize_text_field($fields['key']);
+                    $all_fields[$key]["type"] = sanitize_text_field($fields['type']);
+                    $all_fields[$key]["label"] = sanitize_text_field($fields['label']);
+                    $all_fields[$key]["required"] = sanitize_text_field($fields['required']);
+                    $all_fields[$key]["class"] = sanitize_text_field($fields['class']);
+                    $all_fields[$key]["desc"] = sanitize_text_field($fields['desc']);
+                    $all_fields[$key]["placeholder"] = sanitize_text_field($fields['placeholder']);
+                    $all_fields[$key]["value"] = sanitize_text_field($fields['value']);
+                    $all_fields[$key]["display_in_email"] = sanitize_text_field($fields['display_in_email']);
+                    $all_fields[$key]["display_in_order"] = sanitize_text_field($fields['display_in_order']);
+                    $all_fields[$key]["status"] = sanitize_text_field($fields['status']);
+                }
+            }
             update_option("cfc_billing_fields", $all_fields);
             wp_send_json([
                 "type" => "success",

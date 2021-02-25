@@ -27,13 +27,17 @@
 <script>
 export default {
   name: "Card",
-  props: ["field"],
+  props: ["field", "index"],
   data() {
     return {};
   },
   methods: {
     openSetting() {
-      this.$modal.show("form");
+      this.$modal.show("form", {
+        type: "edit",
+        field: this.field,
+        index: this.index,
+      });
     },
   },
 };

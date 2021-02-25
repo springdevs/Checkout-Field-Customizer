@@ -3,7 +3,12 @@
     <Head :fields="fields" />
     <Section />
     <button
-      @click="$modal.show('form', 'create')"
+      @click="
+        $modal.show('form', {
+          type: 'create',
+          field: false,
+        })
+      "
       style="margin-bottom: 15px"
       class="sdevs-button cfc-primary-button"
     >
@@ -19,6 +24,7 @@
           v-for="(field, index) in fields"
           :key="'card-' + index"
           :field="field"
+          :index="index"
         />
       </transition-group>
     </draggable>
@@ -49,14 +55,14 @@ export default {
                 {
                   label: "Label",
                   type: "text",
-                  name: "cfc-admin-label",
+                  name: "label",
                   placeholder: "Enter Label",
                   value: null,
                 },
                 {
                   label: "Placeholder (optional)",
                   type: "text",
-                  name: "cfc-admin-placeholder",
+                  name: "placeholder",
                   placeholder: "Enter placeholder",
                   value: null,
                 },
@@ -65,14 +71,14 @@ export default {
             {
               label: "Default Value (optional)",
               type: "text",
-              name: "cfc-admin-value",
+              name: "value",
               placeholder: "Enter default value",
               value: null,
             },
             {
               label: "Description (optional)",
               type: "text",
-              name: "cfc-admin-desc",
+              name: "desc",
               placeholder: "Enter description",
               value: null,
             },
@@ -87,7 +93,7 @@ export default {
                 {
                   label: "Type",
                   type: "select",
-                  name: "cfc-admin-type",
+                  name: "type",
                   value: "text",
                   options: [
                     { text: "Text" },
@@ -102,7 +108,7 @@ export default {
                 {
                   label: "Name",
                   type: "text",
-                  name: "cfc-admin-name",
+                  name: "key",
                   placeholder: "Name must be unique !!",
                   value: null,
                 },
@@ -113,14 +119,14 @@ export default {
                 {
                   label: "Status",
                   type: "select",
-                  name: "cfc-admin-status",
+                  name: "status",
                   value: "enable",
                   options: [{ enable: "Enable" }, { disable: "Disable" }],
                 },
                 {
                   label: "Required",
                   type: "select",
-                  name: "cfc-admin-required",
+                  name: "required",
                   value: "yes",
                   options: [{ yes: "Yes" }, { no: "No" }],
                 },
@@ -131,14 +137,14 @@ export default {
                 {
                   label: "Display in Emails",
                   type: "select",
-                  name: "cfc-admin-display-email",
+                  name: "display_in_email",
                   value: "yes",
                   options: [{ yes: "Yes" }, { no: "No" }],
                 },
                 {
                   label: "Display in Order Detail Pages",
                   type: "select",
-                  name: "cfc-admin-display-order",
+                  name: "display_in_order",
                   value: "yes",
                   options: [{ yes: "Yes" }, { no: "No" }],
                 },
@@ -148,8 +154,8 @@ export default {
               label: "Options",
               type: "multi",
               conditional: true,
-              target_field: "cfc-admin-type",
-              name: "cfc-admin-options",
+              target_field: "type",
+              name: "options",
               values: ["select", "radio"],
             },
           ],
@@ -161,7 +167,7 @@ export default {
             {
               label: "Class",
               type: "text",
-              name: "cfc-admin-class",
+              name: "class",
               placeholder: "Enter class name",
               value: "form-row-wide",
             },
