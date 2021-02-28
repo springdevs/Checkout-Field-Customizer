@@ -1,14 +1,9 @@
 <template>
   <div>
     <Head :fields="fields" />
-    <Section />
+    <Section :sections="sections" @section="changeSection" />
     <button
-      @click="
-        $modal.show('form', {
-          type: 'create',
-          field: false,
-        })
-      "
+      @click="$modal.show('createForm')"
       style="margin-bottom: 15px"
       class="sdevs-button cfc-primary-button"
     >
@@ -28,7 +23,8 @@
         />
       </transition-group>
     </draggable>
-    <Form v-on:updated="changeData" :tabs="tabs" />
+    <Edit v-on:updated="changeData" />
+    <Create v-on:updated="changeData" />
     <Column :fields="fields" />
   </div>
 </template>
@@ -37,13 +33,32 @@
 import Head from "./Head";
 import Section from "./Section";
 import Card from "./Card";
-import Form from "./Form";
+import Edit from "./Edit";
+import Create from "./Create";
 import Column from "./Column";
 import draggable from "vuedraggable";
 export default {
   name: "App",
   data() {
     return {
+      target: "cfc_billing_fields",
+      sections: [
+        {
+          name: "billing",
+          label: "Billing Fields",
+          target_fields: "cfc_billing_fields",
+        },
+        {
+          name: "shipping",
+          label: "Shipping Fields",
+          target_fields: "cfc_shipping_fields",
+        },
+        {
+          name: "order",
+          label: "Order Fields",
+          target_fields: "cfc_order_fields",
+        },
+      ],
       fields: [],
       tabs: [
         {
@@ -177,12 +192,17 @@ export default {
     };
   },
   methods: {
+    changeSection(section) {
+      this.target = section.target_fields;
+      this.getData();
+    },
     changeData() {
       this.getData();
     },
     getData() {
       let formData = {
         action: "cfc_get_fields",
+        target: this.target,
       };
       let root = this;
       axios
@@ -202,9 +222,10 @@ export default {
     Head,
     Section,
     Card,
-    Form,
+    Edit,
     draggable,
     Column,
+    Create,
   },
 };
 </script>

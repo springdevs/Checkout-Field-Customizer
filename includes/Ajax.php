@@ -16,7 +16,17 @@ class Ajax
         add_action('wp_ajax_cfc_create_field', [$this, 'cfc_create_field']);
         add_action('wp_ajax_cfc_update_field', [$this, 'cfc_update_field']);
         add_action('wp_ajax_cfc_get_fields', [$this, 'cfc_get_fields']);
+        add_action('wp_ajax_cfc_get_admin_fields', [$this, 'cfc_get_admin_fields']);
         add_action('wp_ajax_cfc_update_fields', [$this, 'cfc_update_fields']);
+        // add_action('wp_ajax_cfc_test_fields', function () {
+        //     update_option("cfc_admin_form_fields", $_POST['tabs']);
+        //     wp_send_json($_POST);
+        // });
+    }
+
+    public function cfc_get_admin_fields()
+    {
+        wp_send_json(get_option('cfc_admin_form_fields', []));
     }
 
     public function cfc_create_field()
@@ -45,6 +55,7 @@ class Ajax
                 "desc" => sanitize_text_field($fields['desc']),
                 "placeholder" => sanitize_text_field($fields['placeholder']),
                 "value" => sanitize_text_field($fields['value']),
+                "options" => (isset($fields['options']) && is_array($fields['options'])) ? $fields['options'] : [],
                 "display_in_email" => sanitize_text_field($fields['display_in_email']),
                 "display_in_order" => sanitize_text_field($fields['display_in_order']),
                 "status" => sanitize_text_field($fields['status']),
@@ -87,6 +98,7 @@ class Ajax
                     $all_fields[$key]["desc"] = sanitize_text_field($fields['desc']);
                     $all_fields[$key]["placeholder"] = sanitize_text_field($fields['placeholder']);
                     $all_fields[$key]["value"] = sanitize_text_field($fields['value']);
+                    $all_fields[$key]["options"] = (isset($fields['options']) && is_array($fields['options'])) ? $fields['options'] : [];
                     $all_fields[$key]["display_in_email"] = sanitize_text_field($fields['display_in_email']);
                     $all_fields[$key]["display_in_order"] = sanitize_text_field($fields['display_in_order']);
                     $all_fields[$key]["status"] = sanitize_text_field($fields['status']);
@@ -95,14 +107,14 @@ class Ajax
             update_option("cfc_billing_fields", $all_fields);
             wp_send_json([
                 "type" => "success",
-                "msg" => "Created successfully !!"
+                "msg" => "Updated successfully !!"
             ]);
         }
     }
 
     public function cfc_get_fields()
     {
-        wp_send_json(get_option('cfc_billing_fields', []));
+        wp_send_json(get_option($_POST['target'], []));
     }
 
     public function cfc_update_fields()

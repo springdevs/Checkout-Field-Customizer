@@ -1,5 +1,5 @@
 <template>
-  <modal name="form" height="500" :draggable="true" @before-open="setData">
+  <modal name="editForm" height="500" :draggable="true" @before-open="setData">
     <div class="cfc-admin-form sdevs-form">
       <div class="cfc-modal-titlebar">
         <strong>Checkout forums</strong>
@@ -157,12 +157,7 @@
             </div>
           </div>
         </div>
-        <div class="cfc-admin-form-buttons" v-if="action === 'create'">
-          <button @click="createForm" class="sdevs-button cfc-primary-button">
-            Create
-          </button>
-        </div>
-        <div class="cfc-admin-form-buttons" v-if="action === 'edit'">
+        <div class="cfc-admin-form-buttons">
           <button @click="updateForm" class="sdevs-button cfc-primary-button">
             Update
           </button>
@@ -183,11 +178,10 @@ import Options from "./Options";
 import Input from "./forms/Input";
 import Select from "./forms/Select";
 export default {
-  name: "Form",
-  props: ["tabs"],
+  name: "Edit",
   data() {
     return {
-      action: "create",
+      tabs: [],
       fields: [],
       Afields: {
         from: "custom",
@@ -205,8 +199,23 @@ export default {
   methods: {
     setData(data) {
       const params = data.params;
-      this.action = params.type;
       this.index = params.index;
+      if (
+        typeof params.field.options == "object" &&
+        params.field.type == "select" &&
+        params.field.options.length > 0
+      ) {
+        this.option_fields = params.field.options;
+        this.visible = true;
+      } else {
+        this.option_fields = [
+          {
+            option_label: null,
+            option_value: null,
+          },
+        ];
+        this.visible = false;
+      }
       this.getAllFields(params.field);
     },
     changeVisible(data) {
@@ -216,7 +225,7 @@ export default {
       this.Afields.options = this.option_fields;
     },
     closeSetting() {
-      this.$modal.hide("form");
+      this.$modal.hide("editForm");
     },
     getFields(fields) {
       if (typeof fields === "object") this.fields = fields;
@@ -225,7 +234,6 @@ export default {
       let tabs = this.tabs;
       for (let index = 0; index < tabs.length; index++) {
         const element = tabs[index];
-
         for (let findex = 0; findex < element.fields.length; findex++) {
           const felement = element.fields[findex];
           if (felement.row) {
@@ -239,6 +247,10 @@ export default {
             }
           } else {
             this.Afields[felement.name] = felement.value;
+            if (field) {
+              this.Afields[felement.name] = field[felement.name];
+              this.Afields.from = field.from;
+            }
           }
         }
       }
@@ -253,45 +265,6 @@ export default {
     },
     removeField(index) {
       this.option_fields.splice(index, 1);
-    },
-    createForm() {
-      let formData = {
-        action: "cfc_create_field",
-        data: this.Afields,
-        nonce: cfc_helper_obj.nonce,
-      };
-      let root = this;
-      axios
-        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
-        .then((response) => {
-          if (response.data.type === "error") {
-            this.$swal.fire({
-              icon: "error",
-              title: "ERROR !!",
-              text: response.data.msg,
-            });
-          } else {
-            this.$swal.fire({
-              icon: "success",
-              title: "SUCCESS !!",
-              text: response.data.msg,
-            });
-            root.fields = [];
-            root.Afields = {};
-            root.option_fields = [
-              {
-                option_label: null,
-                option_value: null,
-              },
-            ];
-            root.visible = false;
-            this.$emit("updated", "created");
-            this.$modal.hide("form");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     updateForm() {
       let formData = {
@@ -326,8 +299,23 @@ export default {
             ];
             root.visible = false;
             this.$emit("updated", "created");
-            this.$modal.hide("form");
+            this.$modal.hide("editForm");
           }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getData() {
+      let formData = {
+        action: "cfc_get_admin_fields",
+        nonce: cfc_helper_obj.nonce,
+      };
+      let root = this;
+      axios
+        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .then((response) => {
+          root.tabs = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -336,6 +324,7 @@ export default {
   },
   mounted() {
     this.getAllFields();
+    this.getData();
   },
   components: {
     Options,

@@ -1,5 +1,9 @@
 $primary-color : #65bc7b;
 
+a:focus {
+    box-shadow: none;
+}
+
 .cfc-header {
     display: flex;
     justify-content: space-between;

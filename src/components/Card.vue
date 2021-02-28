@@ -33,8 +33,7 @@ export default {
   },
   methods: {
     openSetting() {
-      this.$modal.show("form", {
-        type: "edit",
+      this.$modal.show("editForm", {
         field: this.field,
         index: this.index,
       });
