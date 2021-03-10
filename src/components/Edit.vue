@@ -163,6 +163,7 @@
           </button>
           <button
             v-if="Afields.from === 'custom'"
+            @click="deleteField()"
             class="sdevs-button cfc-danger-button"
           >
             Delete
@@ -277,7 +278,7 @@ export default {
       };
       let root = this;
       axios
-        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+          .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
         .then((response) => {
           if (response.data.type === "error") {
             this.$swal.fire({
@@ -323,6 +324,46 @@ export default {
           console.log(error);
         });
     },
+    deleteField() {
+      let formData = {
+        action: "cfc_delete_field",
+        target: this.target,
+        nonce: cfc_helper_obj.nonce,
+        index: this.index,
+      };
+      let root = this;
+      axios
+          .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+          .then((response) => {
+            if (response.data.type === "error") {
+              this.$swal.fire({
+                icon: "error",
+                title: "ERROR !!",
+                text: response.data.msg,
+              });
+            } else {
+              this.$swal.fire({
+                icon: "success",
+                title: "SUCCESS !!",
+                text: response.data.msg,
+              });
+              root.fields = [];
+              root.Afields = {};
+              root.option_fields = [
+                {
+                  option_label: null,
+                  option_value: null,
+                },
+              ];
+              root.visible = false;
+              this.$emit("updated", "created");
+              this.$modal.hide("editForm");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
   },
   mounted() {
     this.getAllFields();

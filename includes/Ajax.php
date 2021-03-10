@@ -18,6 +18,7 @@ class Ajax
         add_action('wp_ajax_cfc_get_fields', [$this, 'cfc_get_fields']);
         add_action('wp_ajax_cfc_get_admin_fields', [$this, 'cfc_get_admin_fields']);
         add_action('wp_ajax_cfc_update_fields', [$this, 'cfc_update_fields']);
+        add_action('wp_ajax_cfc_delete_field', [$this, 'cfc_delete_field']);
         // add_action('wp_ajax_cfc_test_fields', function () {
         //     update_option("cfc_admin_form_fields", $_POST['tabs']);
         //     wp_send_json($_POST);
@@ -86,7 +87,7 @@ class Ajax
                     "msg" => __("Name field is required !!", "sdevs_wea")
                 ]);
             }
-            $all_fields = get_option('cfc_billing_fields', []);
+            $all_fields = get_option($_POST['target'], []);
             $index = $_POST['index'];
             foreach ($all_fields as $key => $all_field) {
                 if ($key == $index) {
@@ -124,6 +125,22 @@ class Ajax
             wp_send_json([
                 "type" => "success",
                 "msg" => "saved successfully !!"
+            ]);
+        }
+    }
+
+    public function cfc_delete_field()
+    {
+        if (
+            isset($_POST['action']) &&
+            isset($_POST['nonce']) &&
+            wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce')) {
+            $all_fields = get_option($_POST['target'], []);
+            unset($all_fields[$_POST['index']]);
+            update_option($_POST['target'], $all_fields);
+            wp_send_json([
+                "type" => "success",
+                "msg" => "Successfully Removed !!"
             ]);
         }
     }
