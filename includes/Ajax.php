@@ -45,7 +45,7 @@ class Ajax
                     "msg" => __("Name field is required !!", "sdevs_wea")
                 ]);
             }
-            $all_fields = get_option("cfc_billing_fields", []);
+            $all_fields = get_option($_POST['target'], []);
             array_push($all_fields, [
                 "key" => sanitize_text_field($fields['key']),
                 "type" => sanitize_text_field($fields['type']),
@@ -62,7 +62,7 @@ class Ajax
                 "priority" => 0,
                 "from" => "custom"
             ]);
-            update_option("cfc_billing_fields", $all_fields);
+            update_option($_POST['target'], $all_fields);
             wp_send_json([
                 "type" => "success",
                 "msg" => "Created successfully !!"
@@ -104,7 +104,7 @@ class Ajax
                     $all_fields[$key]["status"] = sanitize_text_field($fields['status']);
                 }
             }
-            update_option("cfc_billing_fields", $all_fields);
+            update_option($_POST['target'], $all_fields);
             wp_send_json([
                 "type" => "success",
                 "msg" => "Updated successfully !!"
@@ -114,13 +114,13 @@ class Ajax
 
     public function cfc_get_fields()
     {
-        wp_send_json(get_option($_POST['target'], []));
+        wp_send_json(get_option(sanitize_text_field($_POST['target']), []));
     }
 
     public function cfc_update_fields()
     {
         if (is_array($_POST['fields'])) {
-            update_option('cfc_billing_fields', $_POST['fields']);
+            update_option($_POST['target'], $_POST['fields']);
             wp_send_json([
                 "type" => "success",
                 "msg" => "saved successfully !!"

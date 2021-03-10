@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Head :fields="fields" />
+    <Head :fields="fields" :target="target" />
     <Section :sections="sections" @section="changeSection" />
     <button
       @click="$modal.show('createForm')"
-      style="margin-bottom: 15px"
+      style="margin-bottom: 15px;"
       class="sdevs-button cfc-primary-button"
     >
       ADD NEW
@@ -23,8 +23,8 @@
         />
       </transition-group>
     </draggable>
-    <Edit v-on:updated="changeData" />
-    <Create v-on:updated="changeData" />
+    <Edit v-on:updated="changeData" :target="target" />
+    <Create v-on:updated="changeData" :target="target" />
     <Column :fields="fields" />
   </div>
 </template>

@@ -10,12 +10,13 @@
 <script>
 export default {
   name: "Head",
-  props: ["fields"],
+  props: ["fields", "target"],
   methods: {
     submitFields() {
       let formData = {
         action: "cfc_update_fields",
         fields: this.fields,
+        target: this.target,
         nonce: sdwac_coupon_helper_obj.nonce,
       };
       axios

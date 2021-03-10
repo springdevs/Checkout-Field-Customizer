@@ -95,7 +95,7 @@
                       class="sdevs-button cfc-primary-button"
                     >
                       <svg
-                        style="position: relative; top: 4px"
+                        style="position: relative; top: 4px;"
                         width="18"
                         height="18"
                         xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@
                       class="sdevs-button cfc-danger-button"
                     >
                       <svg
-                        style="position: relative; top: 4px"
+                        style="position: relative; top: 4px;"
                         width="18"
                         height="18"
                         xmlns="http://www.w3.org/2000/svg"
@@ -179,6 +179,7 @@ import Input from "./forms/Input";
 import Select from "./forms/Select";
 export default {
   name: "Edit",
+  props: ["target"],
   data() {
     return {
       tabs: [],
@@ -270,6 +271,7 @@ export default {
       let formData = {
         action: "cfc_update_field",
         data: this.Afields,
+        target: this.target,
         nonce: cfc_helper_obj.nonce,
         index: this.index,
       };

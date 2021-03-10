@@ -95,7 +95,7 @@
                       class="sdevs-button cfc-primary-button"
                     >
                       <svg
-                        style="position: relative; top: 4px"
+                        style="position: relative; top: 4px;"
                         width="18"
                         height="18"
                         xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@
                       class="sdevs-button cfc-danger-button"
                     >
                       <svg
-                        style="position: relative; top: 4px"
+                        style="position: relative; top: 4px;"
                         width="18"
                         height="18"
                         xmlns="http://www.w3.org/2000/svg"
@@ -173,6 +173,7 @@ import Input from "./forms/Input";
 import Select from "./forms/Select";
 export default {
   name: "Create",
+  props: ['target'],
   data() {
     return {
       tabs: [],
@@ -246,6 +247,7 @@ export default {
       let formData = {
         action: "cfc_create_field",
         data: this.Afields,
+        target: this.target,
         nonce: cfc_helper_obj.nonce,
       };
       let root = this;

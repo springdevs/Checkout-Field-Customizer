@@ -13,12 +13,12 @@ class Shortcode
     {
         add_shortcode('checkout_field_customizer', [$this, 'render_frontend']);
         add_filter("woocommerce_checkout_fields", function ($fields) {
-            echo "<pre>";
-            print_r($fields);
-            echo "</pre>";
+            // echo "<pre>";
+            // print_r($fields);
+            // echo "</pre>";
             // $biling_fields = [];
             // foreach ($fields as $key => $values) {
-            //     if ($key === "billing") {
+            //     if ($key === "shipping") {
             //         foreach ($values as $bkey => $bfileds) {
             //             array_push($biling_fields, [
             //                 "key" => $bkey,
@@ -33,8 +33,8 @@ class Shortcode
             //         }
             //     }
             // }
-            // update_option("cfc_billing_fields", $biling_fields);
-            // update_option("cfc_default_billing_fields", $biling_fields);
+            // update_option("cfc_shipping_fields", $biling_fields);
+            // update_option("cfc_default_shipping_fields", $biling_fields);
             // var_dump($biling_fields);
             return $fields;
         }, 99);
