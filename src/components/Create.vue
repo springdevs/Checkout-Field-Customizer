@@ -1,5 +1,5 @@
 <template>
-  <modal name="createForm" height="500" :draggable="true" @closed="clearData">
+  <modal name="createForm" height="500" :draggable="true">
     <div class="cfc-admin-form sdevs-form">
       <div class="cfc-modal-titlebar">
         <strong>Checkout forums</strong>
