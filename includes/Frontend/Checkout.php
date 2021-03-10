@@ -4,14 +4,30 @@
 namespace SpringDevs\Cfc\Frontend;
 
 
+/**
+ *
+ * Class Checkout
+ *
+ * @package SpringDevs\Cfc\Frontend
+ *
+ */
+
 class Checkout
 {
 
     public function __construct()
     {
         add_filter('woocommerce_checkout_fields', [$this, 'change_checkout_fields']);
+        add_action('woocommerce_checkout_update_order_meta', [$this, "save_checkout_data"]);
     }
 
+    /**
+     *
+     * Filter Checkout Fields
+     *
+     * @param $fields
+     * @return mixed
+     */
     public function change_checkout_fields($fields)
     {
         $billing_fields = get_option('cfc_billing_fields', []);
@@ -95,6 +111,74 @@ class Checkout
         $fields['shipping'] = $all_shipping_fields;
         $fields['order'] = $all_order_fields;
         return $fields;
+    }
+
+
+    /**
+     * @param $order_id
+     */
+    public function save_checkout_data($order_id)
+    {
+        $billing_fields = get_option('cfc_billing_fields', []);
+        $shipping_fields = get_option('cfc_shipping_fields', []);
+        $order_fields = get_option('cfc_order_fields', []);
+
+        foreach ($billing_fields as $billing_field) {
+            if($billing_field['status'] != 'enable' && $billing_field['from'] != 'custom') continue;
+            $field_key = $billing_field['key'];
+            $field_value = isset($_POST[$field_key]) ? $_POST[$field_key] : null;
+
+//            Sanitize field value
+            if ($field_value != null) {
+                if ($billing_field['type'] != 'email') {
+                    $field_value = sanitize_text_field($field_value);
+                } else {
+                    $field_value = sanitize_email($field_value);
+                }
+            }
+
+//            save data
+            update_post_meta($order_id, $field_key, $field_value);
+        }
+
+
+        foreach ($shipping_fields as $shipping_field) {
+            if($shipping_field['status'] != 'enable' && $shipping_field['from'] != 'custom') continue;
+            $field_key = $shipping_field['key'];
+            $field_value = isset($_POST[$field_key]) ? $_POST[$field_key] : null;
+
+//            Sanitize field value
+            if ($field_value != null) {
+                if ($shipping_field['type'] != 'email') {
+                    $field_value = sanitize_text_field($field_value);
+                } else {
+                    $field_value = sanitize_email($field_value);
+                }
+            }
+
+//            save data
+            update_post_meta($order_id, $field_key, $field_value);
+        }
+
+
+        foreach ($order_fields as $order_field) {
+            if($order_field['status'] != 'enable' && $order_field['from'] != 'custom') continue;
+            $field_key = $order_field['key'];
+            $field_value = isset($_POST[$field_key]) ? $_POST[$field_key] : null;
+
+//            Sanitize field value
+            if ($field_value != null) {
+                if ($order_field['type'] != 'email') {
+                    $field_value = sanitize_text_field($field_value);
+                } else {
+                    $field_value = sanitize_email($field_value);
+                }
+            }
+
+//            save data
+            update_post_meta($order_id, $field_key, $field_value);
+        }
+
     }
 
 }
