@@ -2,6 +2,8 @@
 
 namespace SpringDevs\Cfc;
 
+use SpringDevs\Cfc\Frontend\Checkout;
+
 /**
  * Frontend handler class
  */
@@ -12,6 +14,7 @@ class Frontend
      */
     public function __construct()
     {
-        // new Frontend\Shortcode();
+//         new Frontend\Shortcode();
+        new Checkout();
     }
 }
