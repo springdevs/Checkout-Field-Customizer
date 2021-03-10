@@ -3,6 +3,7 @@
 namespace SpringDevs\Cfc;
 
 use SpringDevs\Cfc\Frontend\Checkout;
+use SpringDevs\Cfc\Frontend\Order;
 
 /**
  * Frontend handler class
@@ -16,5 +17,6 @@ class Frontend
     {
 //         new Frontend\Shortcode();
         new Checkout();
+        new Order();
     }
 }

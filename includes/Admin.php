@@ -2,6 +2,8 @@
 
 namespace SpringDevs\Cfc;
 
+use SpringDevs\Cfc\Admin\Order;
+
 /**
  * The admin class
  */
@@ -13,6 +15,7 @@ class Admin {
     public function __construct() {
         $this->dispatch_actions();
         new Admin\Menu();
+        new Order();
     }
 
     /**
@@ -21,7 +24,7 @@ class Admin {
      * @return void
      */
     public function dispatch_actions() {
-        
+
     }
 
 }
