@@ -90,13 +90,6 @@ export default {
               placeholder: "Enter default value",
               value: null,
             },
-            {
-              label: "Description (optional)",
-              type: "text",
-              name: "desc",
-              placeholder: "Enter description",
-              value: null,
-            },
           ],
         },
         {

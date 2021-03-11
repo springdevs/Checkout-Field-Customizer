@@ -19,10 +19,6 @@ class Ajax
         add_action('wp_ajax_cfc_get_admin_fields', [$this, 'cfc_get_admin_fields']);
         add_action('wp_ajax_cfc_update_fields', [$this, 'cfc_update_fields']);
         add_action('wp_ajax_cfc_delete_field', [$this, 'cfc_delete_field']);
-        // add_action('wp_ajax_cfc_test_fields', function () {
-        //     update_option("cfc_admin_form_fields", $_POST['tabs']);
-        //     wp_send_json($_POST);
-        // });
     }
 
     public function cfc_get_admin_fields()
@@ -53,7 +49,6 @@ class Ajax
                 "label" => sanitize_text_field($fields['label']),
                 "required" => sanitize_text_field($fields['required']),
                 "class" => sanitize_text_field($fields['class']),
-                "desc" => sanitize_text_field($fields['desc']),
                 "placeholder" => sanitize_text_field($fields['placeholder']),
                 "value" => sanitize_text_field($fields['value']),
                 "options" => (isset($fields['options']) && is_array($fields['options'])) ? $fields['options'] : [],
@@ -96,7 +91,6 @@ class Ajax
                     $all_fields[$key]["label"] = sanitize_text_field($fields['label']);
                     $all_fields[$key]["required"] = sanitize_text_field($fields['required']);
                     $all_fields[$key]["class"] = sanitize_text_field($fields['class']);
-                    $all_fields[$key]["desc"] = sanitize_text_field($fields['desc']);
                     $all_fields[$key]["placeholder"] = sanitize_text_field($fields['placeholder']);
                     $all_fields[$key]["value"] = sanitize_text_field($fields['value']);
                     $all_fields[$key]["options"] = (isset($fields['options']) && is_array($fields['options'])) ? $fields['options'] : [];
