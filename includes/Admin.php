@@ -3,6 +3,7 @@
 namespace SpringDevs\Cfc;
 
 use SpringDevs\Cfc\Admin\Order;
+use SpringDevs\Cfc\Illuminate\Email;
 
 /**
  * The admin class
@@ -16,6 +17,7 @@ class Admin {
         $this->dispatch_actions();
         new Admin\Menu();
         new Order();
+        new Email();
     }
 
     /**

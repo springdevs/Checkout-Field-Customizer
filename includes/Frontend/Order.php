@@ -27,7 +27,7 @@ class Order
         $billing_details = [];
 
         foreach ($billing_fields as $billing_field) {
-            if ($billing_field['from'] == 'custom' && $billing_field['status'] == 'enable') {
+            if ($billing_field['from'] == 'custom' && $billing_field['status'] == 'enable' && $billing_field['display_in_order'] == 'yes') {
                 $order_meta = get_post_meta($order->get_id(), $billing_field['key'], true);
                 if ($order_meta) {
                     array_push($billing_details, [
@@ -41,7 +41,7 @@ class Order
         $shipping_details = [];
 
         foreach ($shipping_fields as $shipping_field) {
-            if ($shipping_field['from'] == 'custom' && $shipping_field['status'] == 'enable') {
+            if ($shipping_field['from'] == 'custom' && $shipping_field['status'] == 'enable' && $shipping_field['display_in_order'] == 'yes') {
                 $order_meta = get_post_meta($order->get_id(), $shipping_field['key'], true);
                 if ($order_meta) {
                     array_push($shipping_details, [
@@ -55,7 +55,7 @@ class Order
         $order_details = [];
 
         foreach ($order_fields as $order_field) {
-            if ($order_field['from'] == 'custom' && $order_field['status'] == 'enable') {
+            if ($order_field['from'] == 'custom' && $order_field['status'] == 'enable' && $order_field['display_in_order'] == 'yes') {
                 $order_meta = get_post_meta($order->get_id(), $order_field['key'], true);
                 if ($order_meta) {
                     array_push($order_details, [
