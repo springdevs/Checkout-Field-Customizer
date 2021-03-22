@@ -10,7 +10,7 @@ class Assets
     /**
      * Assets constructor.
      */
-    function __construct()
+    public function __construct()
     {
         if (is_admin()) {
             add_action('admin_enqueue_scripts', [$this, 'register'], 5);
@@ -75,9 +75,9 @@ class Assets
 
         $scripts = [
             "cfc_script" => [
-                "src" => $plugin_js_assets_path . "app.js",
-                "in_footer" => true
-            ]
+                "src"       => $plugin_js_assets_path . "app.js",
+                "in_footer" => true,
+            ],
         ];
 
         return $scripts;
@@ -94,8 +94,8 @@ class Assets
 
         $styles = [
             "cfc_style" => [
-                "src" => $plugin_css_assets_path . "app.css"
-            ]
+                "src" => $plugin_css_assets_path . "app.css",
+            ],
         ];
 
         return $styles;
