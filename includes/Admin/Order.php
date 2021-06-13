@@ -60,39 +60,39 @@ class Order
         }
 
         if (count($billing_details) > 0) {
-            ?>
+?>
             <div class="order_data_column" style="margin-right: 20px;">
-                <h3><?php _e('Billing Details', 'sdevs_wea'); ?></h3>
-                <?php foreach ($billing_details as $billing_detail): ?>
-                    <p><strong><?php _e($billing_detail['label'], 'sdevs_wea'); ?>
+                <h3><?php _e('Billing Details', 'sdevs_cfc'); ?></h3>
+                <?php foreach ($billing_details as $billing_detail) : ?>
+                    <p><strong><?php _e($billing_detail['label'], 'sdevs_cfc'); ?>
                             : </strong><?php echo $billing_detail['value']; ?></p>
                 <?php endforeach; ?>
             </div>
-            <?php
+        <?php
         }
 
         if (count($shipping_details) > 0) {
-            ?>
+        ?>
             <div class="order_data_column" style="margin-right: 20px;">
-                <h3><?php _e('Shipping Details', 'sdevs_wea'); ?></h3>
-                <?php foreach ($shipping_details as $shipping_detail): ?>
-                    <p><strong><?php _e($shipping_detail['label'], 'sdevs_wea'); ?>
+                <h3><?php _e('Shipping Details', 'sdevs_cfc'); ?></h3>
+                <?php foreach ($shipping_details as $shipping_detail) : ?>
+                    <p><strong><?php _e($shipping_detail['label'], 'sdevs_cfc'); ?>
                             : </strong><?php echo $shipping_detail['value']; ?></p>
                 <?php endforeach; ?>
             </div>
-            <?php
+        <?php
         }
 
         if (count($order_details) > 0) {
-            ?>
+        ?>
             <div class="order_data_column">
-                <h3><?php _e('Order Details', 'sdevs_wea'); ?></h3>
-                <?php foreach ($order_details as $order_detail): ?>
-                    <p><strong><?php _e($order_detail['label'], 'sdevs_wea'); ?>
+                <h3><?php _e('Order Details', 'sdevs_cfc'); ?></h3>
+                <?php foreach ($order_details as $order_detail) : ?>
+                    <p><strong><?php _e($order_detail['label'], 'sdevs_cfc'); ?>
                             : </strong><?php echo $order_detail['value']; ?></p>
                 <?php endforeach; ?>
             </div>
-            <?php
+<?php
         }
     }
 }

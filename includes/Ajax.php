@@ -33,13 +33,13 @@ class Ajax
             if (empty($fields['label'])) {
                 return wp_send_json([
                     "type" => "error",
-                    "msg" => __("Label field is required !!", "sdevs_wea")
+                    "msg" => __("Label field is required !!", "sdevs_cfc")
                 ]);
             }
             if (empty($fields['key'])) {
                 return wp_send_json([
                     "type" => "error",
-                    "msg" => __("Name field is required !!", "sdevs_wea")
+                    "msg" => __("Name field is required !!", "sdevs_cfc")
                 ]);
             }
             $all_fields = get_option($_POST['target'], []);
@@ -73,13 +73,13 @@ class Ajax
             if (empty($fields['label'])) {
                 return wp_send_json([
                     "type" => "error",
-                    "msg" => __("Label field is required !!", "sdevs_wea")
+                    "msg" => __("Label field is required !!", "sdevs_cfc")
                 ]);
             }
             if (empty($fields['key'])) {
                 return wp_send_json([
                     "type" => "error",
-                    "msg" => __("Name field is required !!", "sdevs_wea")
+                    "msg" => __("Name field is required !!", "sdevs_cfc")
                 ]);
             }
             $all_fields = get_option($_POST['target'], []);
@@ -128,7 +128,8 @@ class Ajax
         if (
             isset($_POST['action']) &&
             isset($_POST['nonce']) &&
-            wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce')) {
+            wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce')
+        ) {
             $all_fields = get_option($_POST['target'], []);
             unset($all_fields[$_POST['index']]);
             update_option($_POST['target'], $all_fields);

@@ -61,87 +61,75 @@ class Email
         }
 
         if (count($billing_details) > 0) {
-            ?>
+?>
             <div style="margin-bottom: 40px;">
-                <table class="td" cellspacing="0" cellpadding="6"
-                       style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-                       border="1">
+                <table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
                     <tbody>
-                    <tr>
-                        <h2><?php _e('Billing Details', 'sdevs_wea'); ?></h2>
-                    </tr>
-                    <?php foreach ($billing_details as $billing_detail): ?>
                         <tr>
-                            <th class="td" scope="row" colspan="2"
-                                style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                <?php _e($billing_detail['label'], 'sdevs_wea'); ?>
-                            </th>
-                            <td class="td"
-                                style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                <?php echo $billing_detail['value']; ?>
-                            </td>
+                            <h2><?php _e('Billing Details', 'sdevs_cfc'); ?></h2>
                         </tr>
-                    <?php endforeach; ?>
+                        <?php foreach ($billing_details as $billing_detail) : ?>
+                            <tr>
+                                <th class="td" scope="row" colspan="2" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
+                                    <?php _e($billing_detail['label'], 'sdevs_cfc'); ?>
+                                </th>
+                                <td class="td" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
+                                    <?php echo $billing_detail['value']; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php
+        <?php
         }
 
         if (count($shipping_details) > 0) {
-            ?>
+        ?>
             <div style="margin-bottom: 40px;">
-                <table class="td" cellspacing="0" cellpadding="6"
-                       style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-                       border="1">
+                <table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
                     <tbody>
-                    <tr>
-                        <h2><?php _e('Shipping Details', 'sdevs_wea'); ?></h2>
-                    </tr>
-                    <?php foreach ($shipping_details as $shipping_detail): ?>
                         <tr>
-                            <th class="td" scope="row" colspan="2"
-                                style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                <?php _e($shipping_detail['label'], 'sdevs_wea'); ?>
-                            </th>
-                            <td class="td"
-                                style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                <?php echo $shipping_detail['value']; ?>
-                            </td>
+                            <h2><?php _e('Shipping Details', 'sdevs_cfc'); ?></h2>
                         </tr>
-                    <?php endforeach; ?>
+                        <?php foreach ($shipping_details as $shipping_detail) : ?>
+                            <tr>
+                                <th class="td" scope="row" colspan="2" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
+                                    <?php _e($shipping_detail['label'], 'sdevs_cfc'); ?>
+                                </th>
+                                <td class="td" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
+                                    <?php echo $shipping_detail['value']; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php
+        <?php
         }
 
         if (count($order_details) > 0) {
-            ?>
+        ?>
             <div style="margin-bottom: 40px;">
-                <table class="td" cellspacing="0" cellpadding="6"
-                       style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"
-                       border="1">
+                <table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
                     <tbody>
-                    <tr>
-                        <h2><?php _e('Order Details', 'sdevs_wea'); ?></h2>
-                    </tr>
-                    <?php foreach ($order_details as $order_detail): ?>
                         <tr>
-                            <th class="td" scope="row" colspan="2"
-                                style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                <?php _e($order_detail['label'], 'sdevs_wea'); ?>
-                            </th>
-                            <td class="td"
-                                style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                <?php echo $order_detail['value']; ?>
-                            </td>
+                            <h2><?php _e('Order Details', 'sdevs_cfc'); ?></h2>
                         </tr>
-                    <?php endforeach; ?>
+                        <?php foreach ($order_details as $order_detail) : ?>
+                            <tr>
+                                <th class="td" scope="row" colspan="2" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
+                                    <?php _e($order_detail['label'], 'sdevs_cfc'); ?>
+                                </th>
+                                <td class="td" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
+                                    <?php echo $order_detail['value']; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php
+<?php
         }
     }
 }
