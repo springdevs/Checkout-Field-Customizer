@@ -92,10 +92,10 @@
                   <div class="cfc-admin-form-col cfc-multi-buttons">
                     <button
                       @click="cloneFields()"
-                      class="sdevs-button cfc-primary-button"
+                      class="cfc-button cfc-primary-button"
                     >
                       <svg
-                        style="position: relative; top: 4px;"
+                        style="position: relative; top: 4px"
                         width="18"
                         height="18"
                         xmlns="http://www.w3.org/2000/svg"
@@ -123,10 +123,10 @@
                     <button
                       @click="removeField(mindex)"
                       v-if="option_fields.length > 1"
-                      class="sdevs-button cfc-danger-button"
+                      class="cfc-button cfc-danger-button"
                     >
                       <svg
-                        style="position: relative; top: 4px;"
+                        style="position: relative; top: 4px"
                         width="18"
                         height="18"
                         xmlns="http://www.w3.org/2000/svg"
@@ -158,13 +158,13 @@
           </div>
         </div>
         <div class="cfc-admin-form-buttons">
-          <button @click="updateForm" class="sdevs-button cfc-primary-button">
+          <button @click="updateForm" class="cfc-button cfc-primary-button">
             Update
           </button>
           <button
             v-if="Afields.from === 'custom'"
             @click="deleteField()"
-            class="sdevs-button cfc-danger-button"
+            class="cfc-button cfc-danger-button"
           >
             Delete
           </button>
@@ -278,7 +278,7 @@ export default {
       };
       let root = this;
       axios
-          .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
         .then((response) => {
           if (response.data.type === "error") {
             this.$swal.fire({
@@ -333,37 +333,37 @@ export default {
       };
       let root = this;
       axios
-          .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
-          .then((response) => {
-            if (response.data.type === "error") {
-              this.$swal.fire({
-                icon: "error",
-                title: "ERROR !!",
-                text: response.data.msg,
-              });
-            } else {
-              this.$swal.fire({
-                icon: "success",
-                title: "SUCCESS !!",
-                text: response.data.msg,
-              });
-              root.fields = [];
-              root.Afields = {};
-              root.option_fields = [
-                {
-                  option_label: null,
-                  option_value: null,
-                },
-              ];
-              root.visible = false;
-              this.$emit("updated", "created");
-              this.$modal.hide("editForm");
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    }
+        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .then((response) => {
+          if (response.data.type === "error") {
+            this.$swal.fire({
+              icon: "error",
+              title: "ERROR !!",
+              text: response.data.msg,
+            });
+          } else {
+            this.$swal.fire({
+              icon: "success",
+              title: "SUCCESS !!",
+              text: response.data.msg,
+            });
+            root.fields = [];
+            root.Afields = {};
+            root.option_fields = [
+              {
+                option_label: null,
+                option_value: null,
+              },
+            ];
+            root.visible = false;
+            this.$emit("updated", "created");
+            this.$modal.hide("editForm");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   mounted() {
     this.getAllFields();

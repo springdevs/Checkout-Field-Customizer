@@ -4,8 +4,8 @@
     <Section :sections="sections" @section="changeSection" />
     <button
       @click="$modal.show('createForm')"
-      style="margin-bottom: 15px;"
-      class="sdevs-button cfc-primary-button"
+      style="margin-bottom: 15px"
+      class="cfc-button cfc-primary-button"
     >
       ADD NEW
     </button>
