@@ -46,6 +46,27 @@ a.cfc-sec-active {
     margin-bottom: 15px;
 }
 
+.cfc-button {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
 .cfc-primary-button {
     color: #fff;
     box-shadow: $primary-color 0 1px 0;
@@ -67,7 +88,7 @@ a.cfc-sec-active {
     outline: none;
 }
 
-button.sdevs-button.cfc-secondary-button {
+button.cfc-button.cfc-secondary-button {
     border-color: #ddd;
     background-color: transparent;
     color: #888;

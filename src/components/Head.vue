@@ -1,7 +1,7 @@
 <template>
   <div class="cfc-header">
     <h3>Checkout forums</h3>
-    <button @click="submitFields" class="sdevs-button cfc-primary-button">
+    <button @click="submitFields" class="cfc-button cfc-primary-button">
       Save Changes
     </button>
   </div>
