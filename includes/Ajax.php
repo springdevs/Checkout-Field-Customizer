@@ -70,12 +70,6 @@ class Ajax
     {
         if (isset($_POST['action']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce') && isset($_POST['data'])) {
             $fields = $_POST['data'];
-            if (empty($fields['label'])) {
-                return wp_send_json([
-                    "type" => "error",
-                    "msg" => __("Label field is required !!", "sdevs_cfc")
-                ]);
-            }
             if (empty($fields['key'])) {
                 return wp_send_json([
                     "type" => "error",
