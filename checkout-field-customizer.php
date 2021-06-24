@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Checkout Field Customizer
-Plugin URI: https://wordpress.org/plugins/sdevs-wc-cfc
+Plugin URI: https://wordpress.org/plugins/wc-checkout-customizer
 Description: Customize your checkout fields easily !!
 Version: 1.0.0
 Author: SpringDevs
