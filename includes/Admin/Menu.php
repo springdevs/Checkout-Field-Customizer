@@ -1,12 +1,12 @@
 <?php
 
-namespace SpringDevs\Cfc\Admin;
+namespace SpringDevs\ACfc\Admin;
 
 /**
  * Admin Pages Handler
  *
  * Class Menu
- * @package SpringDevs\Cfc\Admin
+ * @package SpringDevs\ACfc\Admin
  */
 class Menu
 {

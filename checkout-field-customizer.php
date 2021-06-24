@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Checkout Field Customizer
-Plugin URI: https://wordpress.org/plugins/sdevs-wc-cfc
+Plugin URI: https://wordpress.org/plugins/wc-checkout-customizer
 Description: Customize your checkout fields easily !!
 Version: 1.0.0
 Author: SpringDevs
@@ -46,11 +46,11 @@ if (!defined('ABSPATH')) {
 require_once __DIR__ . '/vendor/autoload.php';
 
 /**
- * Sdevs_cfc class
+ * Sdevs_acfc class
  *
- * @class Sdevs_cfc The class that holds the entire Sdevs_cfc plugin
+ * @class Sdevs_acfc The class that holds the entire Sdevs_cfc plugin
  */
-final class Sdevs_cfc
+final class Sdevs_acfc
 {
     /**
      * Plugin version
@@ -95,7 +95,7 @@ final class Sdevs_cfc
         static $instance = false;
 
         if (!$instance) {
-            $instance = new Sdevs_cfc();
+            $instance = new Sdevs_acfc();
         }
 
         return $instance;
@@ -136,12 +136,12 @@ final class Sdevs_cfc
      */
     public function define_constants()
     {
-        define('CFC_ASSETS_VERSION', self::version);
-        define('CFC_ASSETS_FILE', __FILE__);
-        define('CFC_ASSETS_PATH', dirname(CFC_ASSETS_FILE));
-        define('CFC_ASSETS_INCLUDES', CFC_ASSETS_PATH . '/includes');
-        define('CFC_ASSETS_URL', plugins_url('', CFC_ASSETS_FILE));
-        define('CFC_ASSETS_ASSETS', CFC_ASSETS_URL . '/assets');
+        define('ACFC_ASSETS_VERSION', self::version);
+        define('ACFC_ASSETS_FILE', __FILE__);
+        define('ACFC_ASSETS_PATH', dirname(ACFC_ASSETS_FILE));
+        define('ACFC_ASSETS_INCLUDES', ACFC_ASSETS_PATH . '/includes');
+        define('ACFC_ASSETS_URL', plugins_url('', ACFC_ASSETS_FILE));
+        define('ACFC_ASSETS_ASSETS', ACFC_ASSETS_URL . '/assets');
     }
 
     /**
@@ -162,7 +162,7 @@ final class Sdevs_cfc
      */
     public function activate()
     {
-        $installer = new \SpringDevs\Cfc\Installer();
+        $installer = new \SpringDevs\ACfc\Installer();
         $installer->run();
     }
 
@@ -183,15 +183,15 @@ final class Sdevs_cfc
     public function includes()
     {
         if ($this->is_request('admin')) {
-            $this->container['admin'] = new SpringDevs\Cfc\Admin();
+            $this->container['admin'] = new SpringDevs\ACfc\Admin();
         }
 
         if ($this->is_request('frontend')) {
-            $this->container['frontend'] = new SpringDevs\Cfc\Frontend();
+            $this->container['frontend'] = new SpringDevs\ACfc\Frontend();
         }
 
         if ($this->is_request('ajax')) {
-            // require_once CFC_ASSETS_INCLUDES . '/class-ajax.php';
+            // require_once ACFC_ASSETS_INCLUDES . '/class-ajax.php';
         }
     }
 
@@ -216,11 +216,11 @@ final class Sdevs_cfc
     public function init_classes()
     {
         if ($this->is_request('ajax')) {
-            $this->container['ajax'] =  new SpringDevs\Cfc\Ajax();
+            $this->container['ajax'] =  new SpringDevs\ACfc\Ajax();
         }
 
-        $this->container['api']    = new SpringDevs\Cfc\Api();
-        $this->container['assets'] = new SpringDevs\Cfc\Assets();
+        $this->container['api']    = new SpringDevs\ACfc\Api();
+        $this->container['assets'] = new SpringDevs\ACfc\Assets();
     }
 
     /**
@@ -259,19 +259,19 @@ final class Sdevs_cfc
                 return (!is_admin() || defined('DOING_AJAX')) && !defined('DOING_CRON');
         }
     }
-} // Sdevs_cfc
+} // Sdevs_acfc
 
 /**
  * Initialize the main plugin
  *
- * @return \Sdevs_cfc|bool
+ * @return \Sdevs_acfc|bool
  */
-function sdevs_cfc()
+function sdevs_acfc()
 {
-    return Sdevs_cfc::init();
+    return Sdevs_acfc::init();
 }
 
 /**
  *  kick-off the plugin
  */
-sdevs_cfc();
+sdevs_acfc();

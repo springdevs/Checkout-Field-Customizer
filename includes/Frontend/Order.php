@@ -1,14 +1,14 @@
 <?php
 
 
-namespace SpringDevs\Cfc\Frontend;
+namespace SpringDevs\ACfc\Frontend;
 
 
 /**
  *
  * Class Order
  *
- * @package SpringDevs\Cfc\Frontend
+ * @package SpringDevs\ACfc\Frontend
  *
  */
 class Order
