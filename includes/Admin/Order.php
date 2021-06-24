@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SpringDevs\Cfc\Admin;
+namespace SpringDevs\ACfc\Admin;
 
 
 class Order

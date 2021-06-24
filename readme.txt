@@ -1,5 +1,5 @@
 === Checkout Field Customizer ===
-Contributors: naminbd, istiaqnirab
+Contributors: springdevs, naminbd, istiaqnirab
 Donate link:
 Tags: checkout, edit-checkout-field, woocommerce checkout customizer
 Requires at least: 1.0.0

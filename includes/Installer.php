@@ -1,10 +1,10 @@
 <?php
 
-namespace SpringDevs\Cfc;
+namespace SpringDevs\ACfc;
 
 /**
  * Class Installer
- * @package SpringDevs\Cfc
+ * @package SpringDevs\ACfc
  */
 class Installer
 {

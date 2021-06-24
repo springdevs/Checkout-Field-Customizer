@@ -1,9 +1,9 @@
 <?php
 
-namespace SpringDevs\Cfc\Illuminate;
+namespace SpringDevs\ACfc\Illuminate;
 
 
-use SpringDevs\Cfc\Frontend\Order;
+use SpringDevs\ACfc\Frontend\Order;
 
 class Email
 {

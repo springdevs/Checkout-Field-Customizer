@@ -1,6 +1,6 @@
 <?php
 
-namespace SpringDevs\Cfc;
+namespace SpringDevs\ACfc;
 
 /**
  * The ajax class
