@@ -65,7 +65,7 @@ class Order
                 <h3><?php _e('Billing Details', 'sdevs_cfc'); ?></h3>
                 <?php foreach ($billing_details as $billing_detail) : ?>
                     <p><strong><?php _e($billing_detail['label'], 'sdevs_cfc'); ?>
-                            : </strong><?php echo $billing_detail['value']; ?></p>
+                            : </strong><?php echo esc_html($billing_detail['value']); ?></p>
                 <?php endforeach; ?>
             </div>
         <?php

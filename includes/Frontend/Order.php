@@ -112,7 +112,7 @@ class Order
                             <th class="woocommerce-table__product-name product-name">
                                 <?php _e($order_detail['label'], 'sdevs_cfc'); ?>
                             </th>
-                            <td class="woocommerce-table__product-total product-total"><?php echo $order_detail['value']; ?></td>
+                            <td class="woocommerce-table__product-total product-total"><?php echo esc_html($order_detail['value']); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tfoot>
