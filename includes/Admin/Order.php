@@ -77,7 +77,7 @@ class Order
                 <h3><?php _e('Shipping Details', 'sdevs_cfc'); ?></h3>
                 <?php foreach ($shipping_details as $shipping_detail) : ?>
                     <p><strong><?php _e($shipping_detail['label'], 'sdevs_cfc'); ?>
-                            : </strong><?php echo $shipping_detail['value']; ?></p>
+                            : </strong><?php echo esc_html($shipping_detail['value']); ?></p>
                 <?php endforeach; ?>
             </div>
         <?php
@@ -89,7 +89,7 @@ class Order
                 <h3><?php _e('Order Details', 'sdevs_cfc'); ?></h3>
                 <?php foreach ($order_details as $order_detail) : ?>
                     <p><strong><?php _e($order_detail['label'], 'sdevs_cfc'); ?>
-                            : </strong><?php echo $order_detail['value']; ?></p>
+                            : </strong><?php echo esc_html($order_detail['value']); ?></p>
                 <?php endforeach; ?>
             </div>
 <?php

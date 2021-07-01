@@ -74,7 +74,7 @@ class Email
                                     <?php _e($billing_detail['label'], 'sdevs_cfc'); ?>
                                 </th>
                                 <td class="td" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                    <?php echo $billing_detail['value']; ?>
+                                    <?php echo esc_html($billing_detail['value']); ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -98,7 +98,7 @@ class Email
                                     <?php _e($shipping_detail['label'], 'sdevs_cfc'); ?>
                                 </th>
                                 <td class="td" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                    <?php echo $shipping_detail['value']; ?>
+                                    <?php echo esc_html($shipping_detail['value']); ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -122,7 +122,7 @@ class Email
                                     <?php _e($order_detail['label'], 'sdevs_cfc'); ?>
                                 </th>
                                 <td class="td" style="color: #636363; border: 1px solid #e5e5e5; vertical-align: middle; padding: 12px; text-align: left;">
-                                    <?php echo $order_detail['value']; ?>
+                                    <?php echo esc_html($order_detail['value']); ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
