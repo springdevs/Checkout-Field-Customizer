@@ -76,7 +76,7 @@ class Order
                             <th class="woocommerce-table__product-name product-name">
                                 <?php _e($billing_detail['label'], 'sdevs_cfc'); ?>
                             </th>
-                            <td class="woocommerce-table__product-total product-total"><?php echo $billing_detail['value']; ?></td>
+                            <td class="woocommerce-table__product-total product-total"><?php echo esc_html($billing_detail['value']); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tfoot>
@@ -94,7 +94,7 @@ class Order
                             <th class="woocommerce-table__product-name product-name">
                                 <?php _e($shipping_detail['label'], 'sdevs_cfc'); ?>
                             </th>
-                            <td class="woocommerce-table__product-total product-total"><?php echo $shipping_detail['value']; ?></td>
+                            <td class="woocommerce-table__product-total product-total"><?php echo esc_html($shipping_detail['value']); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tfoot>
