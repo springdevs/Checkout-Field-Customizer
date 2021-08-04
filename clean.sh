@@ -13,3 +13,6 @@ rm -r src/
 rm -r .git/
 rm -r .editorconfig
 rm -r .gitignore
+
+echo "Deleted myself!"
+rm -rf clean.sh
