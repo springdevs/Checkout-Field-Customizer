@@ -17,10 +17,10 @@ export default {
         action: "cfc_update_fields",
         fields: this.fields,
         target: this.target,
-        nonce: sdwac_coupon_helper_obj.nonce,
+        nonce: cfc_helper_obj.nonce,
       };
       axios
-        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .post(cfc_helper_obj.ajax_url, Qs.stringify(formData))
         .then((response) => {
           if (response.data.type === "success") {
             this.$swal.fire({

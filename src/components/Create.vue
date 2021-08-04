@@ -252,7 +252,7 @@ export default {
       };
       let root = this;
       axios
-        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .post(cfc_helper_obj.ajax_url, Qs.stringify(formData))
         .then((response) => {
           if (response.data.type === "error") {
             this.$swal.fire({
@@ -290,7 +290,7 @@ export default {
       };
       let root = this;
       axios
-        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .post(cfc_helper_obj.ajax_url, Qs.stringify(formData))
         .then((response) => {
           root.tabs = response.data;
           root.getAllFields();

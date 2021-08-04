@@ -199,7 +199,7 @@ export default {
       };
       let root = this;
       axios
-        .post(sdwac_coupon_helper_obj.ajax_url, Qs.stringify(formData))
+        .post(cfc_helper_obj.ajax_url, Qs.stringify(formData))
         .then((response) => {
           root.fields = response.data;
         })
