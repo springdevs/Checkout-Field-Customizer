@@ -3,7 +3,7 @@
 Plugin Name: Checkout Field Customizer
 Plugin URI: https://wordpress.org/plugins/wc-checkout-customizer
 Description: Customize your checkout fields easily !!
-Version: 1.0.0
+Version: 1.0.1
 Author: SpringDevs
 Author URI: https://springdevs.com/
 License: GPLv2
@@ -57,7 +57,7 @@ final class Sdevs_acfc
      *
      * @var string
      */
-    const version = '1.0.0';
+    const version = '1.0.1';
 
     /**
      * Holds various class instances

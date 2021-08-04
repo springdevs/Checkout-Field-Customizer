@@ -3,7 +3,7 @@ Contributors: springdevs, naminbd, istiaqnirab
 Donate link:
 Tags: checkout, edit-checkout-field, woocommerce checkout customizer
 Requires at least: 1.0.0
-Tested up to: 5.7
+Tested up to: 5.8
 Stable tag: 1.0.0
 Requires PHP: 7.0
 License: GPLv2 or later
@@ -48,6 +48,10 @@ Customize your checkout fields easily !!
 
 
 == Changelog ==
+
+    = 1.0.1 =
+        * [Fix] Checkout fields not displaying on backend
+        * Improve UI
 
     = 1.0.0 =
         * Initial release
