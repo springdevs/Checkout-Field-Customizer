@@ -1,6 +1,6 @@
 <?php
 
-namespace SpringDevs\Cfc;
+namespace SpringDevs\ACfc;
 
 /**
  * The ajax class
@@ -29,20 +29,21 @@ class Ajax
     public function cfc_create_field()
     {
         if (isset($_POST['action']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce') && isset($_POST['data'])) {
-            $fields = $_POST['data'];
+            $fields = $this->sanitize_array_field($_POST['data']);
             if (empty($fields['label'])) {
                 return wp_send_json([
                     "type" => "error",
-                    "msg" => __("Label field is required !!", "sdevs_wea")
+                    "msg" => __("Label field is required !!", "sdevs_cfc")
                 ]);
             }
             if (empty($fields['key'])) {
                 return wp_send_json([
                     "type" => "error",
-                    "msg" => __("Name field is required !!", "sdevs_wea")
+                    "msg" => __("Name field is required !!", "sdevs_cfc")
                 ]);
             }
-            $all_fields = get_option($_POST['target'], []);
+            $option_key = sanitize_text_field($_POST['target']);
+            $all_fields = get_option($option_key, []);
             array_push($all_fields, [
                 "key" => sanitize_text_field($fields['key']),
                 "type" => sanitize_text_field($fields['type']),
@@ -58,7 +59,7 @@ class Ajax
                 "priority" => 0,
                 "from" => "custom"
             ]);
-            update_option($_POST['target'], $all_fields);
+            update_option($option_key, $all_fields);
             wp_send_json([
                 "type" => "success",
                 "msg" => "Created successfully !!"
@@ -69,20 +70,15 @@ class Ajax
     public function cfc_update_field()
     {
         if (isset($_POST['action']) && isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce') && isset($_POST['data'])) {
-            $fields = $_POST['data'];
-            if (empty($fields['label'])) {
-                return wp_send_json([
-                    "type" => "error",
-                    "msg" => __("Label field is required !!", "sdevs_wea")
-                ]);
-            }
+            $fields = $this->sanitize_array_field($_POST['data']);
+            $option_key = sanitize_text_field($_POST['target']);
             if (empty($fields['key'])) {
                 return wp_send_json([
                     "type" => "error",
-                    "msg" => __("Name field is required !!", "sdevs_wea")
+                    "msg" => __("Name field is required !!", "sdevs_cfc")
                 ]);
             }
-            $all_fields = get_option($_POST['target'], []);
+            $all_fields = get_option($option_key, []);
             $index = $_POST['index'];
             foreach ($all_fields as $key => $all_field) {
                 if ($key == $index) {
@@ -99,7 +95,7 @@ class Ajax
                     $all_fields[$key]["status"] = sanitize_text_field($fields['status']);
                 }
             }
-            update_option($_POST['target'], $all_fields);
+            update_option($option_key, $all_fields);
             wp_send_json([
                 "type" => "success",
                 "msg" => "Updated successfully !!"
@@ -115,7 +111,7 @@ class Ajax
     public function cfc_update_fields()
     {
         if (is_array($_POST['fields'])) {
-            update_option($_POST['target'], $_POST['fields']);
+            update_option(sanitize_text_field($_POST['target']), $this->sanitize_array_field($_POST['fields']));
             wp_send_json([
                 "type" => "success",
                 "msg" => "saved successfully !!"
@@ -128,14 +124,38 @@ class Ajax
         if (
             isset($_POST['action']) &&
             isset($_POST['nonce']) &&
-            wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce')) {
-            $all_fields = get_option($_POST['target'], []);
-            unset($all_fields[$_POST['index']]);
-            update_option($_POST['target'], $all_fields);
+            wp_verify_nonce($_POST['nonce'], 'cfc_ajax_nonce')
+        ) {
+            $option_key = sanitize_text_field($_POST['target']);
+            $all_fields = get_option($option_key, []);
+            unset($all_fields[sanitize_text_field($_POST['index'])]);
+            update_option($option_key, $all_fields);
             wp_send_json([
                 "type" => "success",
                 "msg" => "Successfully Removed !!"
             ]);
         }
+    }
+
+    /**
+     * Recursive sanitation an array
+     * 
+     * @param $array
+     * @since  1.0.0
+     * @return mixed
+     */
+    public function sanitize_array_field(array $arrays)
+    {
+        $sanitized_array = [];
+        foreach ($arrays as $key => $array) {
+            $value = false;
+            if (is_array($array)) {
+                $value = $this->sanitize_array_field($array);
+            } else {
+                $value = sanitize_text_field($array);
+            }
+            $sanitized_array[$key] = $value;
+        }
+        return $sanitized_array;
     }
 }

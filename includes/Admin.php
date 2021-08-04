@@ -1,19 +1,21 @@
 <?php
 
-namespace SpringDevs\Cfc;
+namespace SpringDevs\ACfc;
 
-use SpringDevs\Cfc\Admin\Order;
-use SpringDevs\Cfc\Illuminate\Email;
+use SpringDevs\ACfc\Admin\Order;
+use SpringDevs\ACfc\Illuminate\Email;
 
 /**
  * The admin class
  */
-class Admin {
+class Admin
+{
 
     /**
      * Initialize the class
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->dispatch_actions();
         new Admin\Menu();
         new Order();
@@ -25,8 +27,7 @@ class Admin {
      *
      * @return void
      */
-    public function dispatch_actions() {
-
+    public function dispatch_actions()
+    {
     }
-
 }

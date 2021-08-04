@@ -92,10 +92,10 @@
                   <div class="cfc-admin-form-col cfc-multi-buttons">
                     <button
                       @click="cloneFields()"
-                      class="sdevs-button cfc-primary-button"
+                      class="cfc-button cfc-primary-button"
                     >
                       <svg
-                        style="position: relative; top: 4px;"
+                        style="position: relative; top: 4px"
                         width="18"
                         height="18"
                         xmlns="http://www.w3.org/2000/svg"
@@ -123,10 +123,10 @@
                     <button
                       @click="removeField(mindex)"
                       v-if="option_fields.length > 1"
-                      class="sdevs-button cfc-danger-button"
+                      class="cfc-button cfc-danger-button"
                     >
                       <svg
-                        style="position: relative; top: 4px;"
+                        style="position: relative; top: 4px"
                         width="18"
                         height="18"
                         xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +158,7 @@
           </div>
         </div>
         <div class="cfc-admin-form-buttons">
-          <button @click="createForm" class="sdevs-button cfc-primary-button">
+          <button @click="createForm" class="cfc-button cfc-primary-button">
             Create
           </button>
         </div>
@@ -173,7 +173,7 @@ import Input from "./forms/Input";
 import Select from "./forms/Select";
 export default {
   name: "Create",
-  props: ['target'],
+  props: ["target"],
   data() {
     return {
       tabs: [],

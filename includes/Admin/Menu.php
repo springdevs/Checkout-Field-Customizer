@@ -1,12 +1,12 @@
 <?php
 
-namespace SpringDevs\Cfc\Admin;
+namespace SpringDevs\ACfc\Admin;
 
 /**
  * Admin Pages Handler
  *
  * Class Menu
- * @package SpringDevs\Cfc\Admin
+ * @package SpringDevs\ACfc\Admin
  */
 class Menu
 {
@@ -28,7 +28,7 @@ class Menu
         $menu_slug = 'cfc-admin';
         $capability = 'manage_options';
 
-        $hook = add_submenu_page('woocommerce', __('Checkout Fields', 'sdevs_wea'), __('Checkout Fields', 'sdevs_wea'), $capability, $menu_slug, [$this, 'plugin_page']);
+        $hook = add_submenu_page('woocommerce', __('Checkout Fields', 'sdevs_cfc'), __('Checkout Fields', 'sdevs_cfc'), $capability, $menu_slug, [$this, 'plugin_page']);
 
         add_action('load-' . $hook, [$this, 'init_hooks']);
     }

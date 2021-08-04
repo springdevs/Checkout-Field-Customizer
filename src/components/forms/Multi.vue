@@ -23,7 +23,7 @@
         />
       </div>
       <div class="cfc-admin-form-col cfc-multi-buttons">
-        <button @click="cloneFields()" class="sdevs-button cfc-primary-button">
+        <button @click="cloneFields()" class="cfc-button cfc-primary-button">
           <svg
             style="position: relative; top: 4px"
             width="18"
@@ -52,7 +52,7 @@
         </button>
         <button
           @click="removeField(mindex)"
-          class="sdevs-button cfc-danger-button"
+          class="cfc-button cfc-danger-button"
         >
           <svg
             style="position: relative; top: 4px"

@@ -1,10 +1,10 @@
 <?php
 
-namespace SpringDevs\Cfc;
+namespace SpringDevs\ACfc;
 
-use SpringDevs\Cfc\Frontend\Checkout;
-use SpringDevs\Cfc\Frontend\Order;
-use SpringDevs\Cfc\Illuminate\Email;
+use SpringDevs\ACfc\Frontend\Checkout;
+use SpringDevs\ACfc\Frontend\Order;
+use SpringDevs\ACfc\Illuminate\Email;
 
 /**
  * Frontend handler class

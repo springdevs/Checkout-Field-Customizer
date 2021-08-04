@@ -1,14 +1,14 @@
 <?php
 
 
-namespace SpringDevs\Cfc\Frontend;
+namespace SpringDevs\ACfc\Frontend;
 
 
 /**
  *
  * Class Order
  *
- * @package SpringDevs\Cfc\Frontend
+ * @package SpringDevs\ACfc\Frontend
  *
  */
 class Order
@@ -67,57 +67,57 @@ class Order
         }
 
         if (count($billing_details) > 0) {
-            ?>
-            <h2 class="woocommerce-order-details__title"><?php _e('Billing Details', 'sdevs_wea'); ?></h2>
+?>
+            <h2 class="woocommerce-order-details__title"><?php _e('Billing Details', 'sdevs_cfc'); ?></h2>
             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                 <tfoot>
-                <?php foreach ($billing_details as $billing_detail): ?>
-                    <tr class="woocommerce-table__line-item order_item">
-                        <th class="woocommerce-table__product-name product-name">
-                            <?php _e($billing_detail['label'], 'sdevs_wea'); ?>
-                        </th>
-                        <td class="woocommerce-table__product-total product-total"><?php echo $billing_detail['value']; ?></td>
-                    </tr>
-                <?php endforeach; ?>
+                    <?php foreach ($billing_details as $billing_detail) : ?>
+                        <tr class="woocommerce-table__line-item order_item">
+                            <th class="woocommerce-table__product-name product-name">
+                                <?php _e($billing_detail['label'], 'sdevs_cfc'); ?>
+                            </th>
+                            <td class="woocommerce-table__product-total product-total"><?php echo esc_html($billing_detail['value']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tfoot>
             </table>
-            <?php
+        <?php
         }
 
         if (count($shipping_details) > 0) {
-            ?>
-            <h2 class="woocommerce-order-details__title"><?php _e('Shipping Details', 'sdevs_wea'); ?></h2>
+        ?>
+            <h2 class="woocommerce-order-details__title"><?php _e('Shipping Details', 'sdevs_cfc'); ?></h2>
             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                 <tfoot>
-                <?php foreach ($shipping_details as $shipping_detail): ?>
-                    <tr class="woocommerce-table__line-item order_item">
-                        <th class="woocommerce-table__product-name product-name">
-                            <?php _e($shipping_detail['label'], 'sdevs_wea'); ?>
-                        </th>
-                        <td class="woocommerce-table__product-total product-total"><?php echo $shipping_detail['value']; ?></td>
-                    </tr>
-                <?php endforeach; ?>
+                    <?php foreach ($shipping_details as $shipping_detail) : ?>
+                        <tr class="woocommerce-table__line-item order_item">
+                            <th class="woocommerce-table__product-name product-name">
+                                <?php _e($shipping_detail['label'], 'sdevs_cfc'); ?>
+                            </th>
+                            <td class="woocommerce-table__product-total product-total"><?php echo esc_html($shipping_detail['value']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tfoot>
             </table>
-            <?php
+        <?php
         }
 
         if (count($order_details) > 0) {
-            ?>
-            <h2 class="woocommerce-order-details__title"><?php _e('Order Details', 'sdevs_wea'); ?></h2>
+        ?>
+            <h2 class="woocommerce-order-details__title"><?php _e('Order Details', 'sdevs_cfc'); ?></h2>
             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                 <tfoot>
-                <?php foreach ($order_details as $order_detail): ?>
-                    <tr class="woocommerce-table__line-item order_item">
-                        <th class="woocommerce-table__product-name product-name">
-                            <?php _e($order_detail['label'], 'sdevs_wea'); ?>
-                        </th>
-                        <td class="woocommerce-table__product-total product-total"><?php echo $order_detail['value']; ?></td>
-                    </tr>
-                <?php endforeach; ?>
+                    <?php foreach ($order_details as $order_detail) : ?>
+                        <tr class="woocommerce-table__line-item order_item">
+                            <th class="woocommerce-table__product-name product-name">
+                                <?php _e($order_detail['label'], 'sdevs_cfc'); ?>
+                            </th>
+                            <td class="woocommerce-table__product-total product-total"><?php echo esc_html($order_detail['value']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tfoot>
             </table>
-            <?php
+<?php
         }
     }
 }

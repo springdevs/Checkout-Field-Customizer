@@ -1,7 +1,42 @@
 <?php
 /*
-Module Name: Checkout Field Customizer
+Plugin Name: Checkout Field Customizer
+Plugin URI: https://wordpress.org/plugins/wc-checkout-customizer
+Description: Customize your checkout fields easily !!
+Version: 1.0.0
+Author: SpringDevs
+Author URI: https://springdevs.com/
+License: GPLv2
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: sdevs_cfc
+Domain Path: /languages
 */
+
+/**
+ * Copyright (c) 2021 SpringDevs (email: contact@springdevs.com). All rights reserved.
+ *
+ * Released under the GPL license
+ * http://www.opensource.org/licenses/gpl-license.php
+ *
+ * This is an add-on for WordPress
+ * http://wordpress.org/
+ *
+ * **********************************************************************
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * **********************************************************************
+ */
 
 // don't call the file directly
 if (!defined('ABSPATH')) {
@@ -11,11 +46,11 @@ if (!defined('ABSPATH')) {
 require_once __DIR__ . '/vendor/autoload.php';
 
 /**
- * Sdevs_cfc class
+ * Sdevs_acfc class
  *
- * @class Sdevs_cfc The class that holds the entire Sdevs_cfc plugin
+ * @class Sdevs_acfc The class that holds the entire Sdevs_cfc plugin
  */
-final class Sdevs_cfc
+final class Sdevs_acfc
 {
     /**
      * Plugin version
@@ -41,6 +76,9 @@ final class Sdevs_cfc
     {
         $this->define_constants();
 
+        register_activation_hook(__FILE__, [$this, 'activate']);
+        register_deactivation_hook(__FILE__, [$this, 'deactivate']);
+
         add_action('plugins_loaded', [$this, 'init_plugin']);
     }
 
@@ -57,7 +95,7 @@ final class Sdevs_cfc
         static $instance = false;
 
         if (!$instance) {
-            $instance = new Sdevs_cfc();
+            $instance = new Sdevs_acfc();
         }
 
         return $instance;
@@ -98,12 +136,12 @@ final class Sdevs_cfc
      */
     public function define_constants()
     {
-        define('CFC_ASSETS_VERSION', self::version);
-        define('CFC_ASSETS_FILE', __FILE__);
-        define('CFC_ASSETS_PATH', dirname(CFC_ASSETS_FILE));
-        define('CFC_ASSETS_INCLUDES', CFC_ASSETS_PATH . '/includes');
-        define('CFC_ASSETS_URL', plugins_url('', CFC_ASSETS_FILE));
-        define('CFC_ASSETS_ASSETS', CFC_ASSETS_URL . '/assets');
+        define('ACFC_ASSETS_VERSION', self::version);
+        define('ACFC_ASSETS_FILE', __FILE__);
+        define('ACFC_ASSETS_PATH', dirname(ACFC_ASSETS_FILE));
+        define('ACFC_ASSETS_INCLUDES', ACFC_ASSETS_PATH . '/includes');
+        define('ACFC_ASSETS_URL', plugins_url('', ACFC_ASSETS_FILE));
+        define('ACFC_ASSETS_ASSETS', ACFC_ASSETS_URL . '/assets');
     }
 
     /**
@@ -118,6 +156,26 @@ final class Sdevs_cfc
     }
 
     /**
+     * Placeholder for activation function
+     *
+     * Nothing being called here yet.
+     */
+    public function activate()
+    {
+        $installer = new \SpringDevs\ACfc\Installer();
+        $installer->run();
+    }
+
+    /**
+     * Placeholder for deactivation function
+     *
+     * Nothing being called here yet.
+     */
+    public function deactivate()
+    {
+    }
+
+    /**
      * Include the required files
      *
      * @return void
@@ -125,15 +183,15 @@ final class Sdevs_cfc
     public function includes()
     {
         if ($this->is_request('admin')) {
-            $this->container['admin'] = new SpringDevs\Cfc\Admin();
+            $this->container['admin'] = new SpringDevs\ACfc\Admin();
         }
 
         if ($this->is_request('frontend')) {
-            $this->container['frontend'] = new SpringDevs\Cfc\Frontend();
+            $this->container['frontend'] = new SpringDevs\ACfc\Frontend();
         }
 
         if ($this->is_request('ajax')) {
-            // require_once CFC_ASSETS_INCLUDES . '/class-ajax.php';
+            // require_once ACFC_ASSETS_INCLUDES . '/class-ajax.php';
         }
     }
 
@@ -145,6 +203,9 @@ final class Sdevs_cfc
     public function init_hooks()
     {
         add_action('init', [$this, 'init_classes']);
+
+        // Localize our plugin
+        add_action('init', [$this, 'localization_setup']);
     }
 
     /**
@@ -155,11 +216,21 @@ final class Sdevs_cfc
     public function init_classes()
     {
         if ($this->is_request('ajax')) {
-            $this->container['ajax'] =  new SpringDevs\Cfc\Ajax();
+            $this->container['ajax'] =  new SpringDevs\ACfc\Ajax();
         }
 
-        $this->container['api']    = new SpringDevs\Cfc\Api();
-        $this->container['assets'] = new SpringDevs\Cfc\Assets();
+        $this->container['api']    = new SpringDevs\ACfc\Api();
+        $this->container['assets'] = new SpringDevs\ACfc\Assets();
+    }
+
+    /**
+     * Initialize plugin for localization
+     *
+     * @uses load_plugin_textdomain()
+     */
+    public function localization_setup()
+    {
+        load_plugin_textdomain('sdevs_cfc', false, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
 
     /**
@@ -188,19 +259,19 @@ final class Sdevs_cfc
                 return (!is_admin() || defined('DOING_AJAX')) && !defined('DOING_CRON');
         }
     }
-} // Sdevs_cfc
+} // Sdevs_acfc
 
 /**
  * Initialize the main plugin
  *
- * @return \Sdevs_cfc|bool
+ * @return \Sdevs_acfc|bool
  */
-function sdevs_cfc()
+function sdevs_acfc()
 {
-    return Sdevs_cfc::init();
+    return Sdevs_acfc::init();
 }
 
 /**
  *  kick-off the plugin
  */
-sdevs_cfc();
+sdevs_acfc();
