@@ -8,3 +8,8 @@ rm -r mix-manifest.json
 rm -r README.md
 
 rm -r webpack.mix.js
+rm -r src/
+
+rm -r .git/
+rm -r .editorconfig
+rm -r .gitignore
